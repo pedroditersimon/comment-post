@@ -2,12 +2,12 @@
 
 public class Comment : BaseEntity<int>
 {
-	public required User User { get; set; }
-	public required int UserId { get; set; }
+	public User User { get; set; }
+	public int UserId { get; set; }
 
-	public required string PageId { get; set; }
+	public string PageId { get; set; }
 
-	public required string Text { get; set; }
+	public string Text { get; set; }
 	public bool Visibility { get; set; } = true;
 
 	public Comment? Reply { get; set; }
