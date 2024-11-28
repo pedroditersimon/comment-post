@@ -4,6 +4,8 @@ using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.UseCases;
 
+// Leer comentarios: Visualizar los comentarios publicados en una página.
+
 public class GetCommentsByPageIdRequest : Pagination
 {
 	public string PageId { get; set; }
@@ -18,7 +20,7 @@ public class GetCommentsByPageId
 		_commentRepository = commentRepository;
 	}
 
-	// Leer comentarios: Visualizar los comentarios publicados en una página.
+
 	public async Task<PaginationResult<Comment>> ExecuteAsync(GetCommentsByPageIdRequest request)
 	{
 		Pagination pagination = request;

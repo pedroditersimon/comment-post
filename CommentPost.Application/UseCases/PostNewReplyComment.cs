@@ -1,8 +1,9 @@
-﻿using CommentPost.Application.Mappers;
-using CommentPost.Application.Repositories;
+﻿using CommentPost.Application.Repositories;
 using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.UseCases;
+
+// Responder comentarios: Un usuario registrado responde a un comentario existente.
 
 public class PostNewReplyCommentRequest
 {
@@ -20,7 +21,7 @@ public class PostNewReplyComment
 		_commentRepository = commentRepository;
 	}
 
-	// Responder comentarios: Un usuario registrado responde a un comentario existente.
+
 	public async Task<Comment?> ExecuteAsync(PostNewReplyCommentRequest request)
 	{
 		Comment? originalComment = await _commentRepository.GetById(request.ReplyId);
@@ -30,10 +31,14 @@ public class PostNewReplyComment
 			return null;
 
 		// map
-		Comment comment = new Comment().ReplaceWith(request);
+		Comment comment = new()
+		{
+			UserId = request.UserId,
+			Text = request.Text,
 
-		// original comment is already a reply
-		comment.ReplyId = originalComment.ReplyId ?? originalComment.ID;
+			// if original comment is already a reply, point to the same reply
+			ReplyId = originalComment.ReplyId ?? originalComment.ID
+		};
 
 		return await _commentRepository.Create(comment);
 	}

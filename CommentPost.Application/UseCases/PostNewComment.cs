@@ -1,8 +1,9 @@
-﻿using CommentPost.Application.Mappers;
-using CommentPost.Application.Repositories;
+﻿using CommentPost.Application.Repositories;
 using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.UseCases;
+
+// Postear comentarios: Un usuario registrado crea un nuevo comentario en la plataforma.
 
 public class PostNewCommentRequest
 {
@@ -20,10 +21,16 @@ public class PostNewComment
 		_commentRepository = commentRepository;
 	}
 
-	// Postear comentarios: Un usuario registrado crea un nuevo comentario en la plataforma.
+
 	public async Task<Comment?> ExecuteAsync(PostNewCommentRequest request)
 	{
-		Comment comment = new Comment().ReplaceWith(request);
-		return _commentRepository.Create(comment);
+		Comment comment = new()
+		{
+			UserId = request.UserId,
+			PageId = request.PageId,
+			Text = request.Text
+		};
+
+		return await _commentRepository.Create(comment);
 	}
 }
