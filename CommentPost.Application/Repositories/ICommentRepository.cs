@@ -6,18 +6,18 @@ namespace CommentPost.Application.Repositories;
 public interface ICommentRepository
 {
 	// Get
-	public Comment? GetById(int id);
-	public PaginationResult<Comment> GetAll(Pagination pagination);
-	public PaginationResult<Comment> GetAllByPageId(string pageId, Pagination pagination);
-	public PaginationResult<Comment> GetAllByReplyId(int replyId, Pagination pagination);
-	public PaginationResult<Comment> SearchByText(string text, Pagination pagination);
+	public Task<Comment?> GetById(int id);
+	public Task<PaginationResult<Comment>> GetAll(Pagination pagination);
+	public Task<PaginationResult<Comment>> GetAllByPageId(string pageId, Pagination pagination);
+	public Task<PaginationResult<Comment>> GetAllByReplyId(int replyId, Pagination pagination);
+	public Task<PaginationResult<Comment>> SearchByText(string text, Pagination pagination);
 
 	// Create
-	public Comment? Create(Comment comment);
+	public Task<Comment?> Create(Comment comment);
 
 	// Update
-	public Comment? Update(Comment comment);
+	public Task<Comment?> Update(Comment comment);
 
 	// Delete
-	public bool SoftDelete(int id);
+	public Task<bool> SoftDelete(int id);
 }

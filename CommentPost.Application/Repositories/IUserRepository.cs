@@ -6,15 +6,15 @@ namespace CommentPost.Application.Repositories;
 public interface IUserRepository
 {
 	// Get
-	public PaginationResult<User> GetAll();
-	public User? GetById(int id);
+	public Task<PaginationResult<User>> GetAll(Pagination pagination);
+	public Task<User?> GetById(int id);
 
 	// Create
-	public User? Create(User user);
+	public Task<User?> Create(User user);
 
 	// Update
-	public User? Update(User user);
+	public Task<User?> Update(User user);
 
 	// Delete
-	public bool SoftDelete(int id);
+	public Task<bool> SoftDelete(int id);
 }
