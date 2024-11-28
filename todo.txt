@@ -1,0 +1,6 @@
+
+Todo:
+-
+
+Done:
+- Implementar Pagination y PaginationResult<T> en repositorios

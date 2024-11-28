@@ -1,8 +1,7 @@
-﻿using CommentPost.Domain.Entities;
+﻿using CommentPost.Application.Filters;
+using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.Services;
-
-
 
 public class CommentService
 {
@@ -13,8 +12,8 @@ public class CommentService
 	public Comment? PostNewReplyComment(Comment comment, int replyId) { return null; }
 
 	// Leer comentarios: Visualizar los comentarios publicados en una página.
-	public List<Comment> GetCommentsByPageId(string pageId) { return null; }
+	public PaginationResult<Comment> GetCommentsByPageId(string pageId, Pagination pagination) { return null; }
 
 	// Leer respuestas de comentarios: Un usuario lee las respuestas de un comentario.
-	public List<Comment> GetRepliesByCommentId(int commentId) { return null; }
+	public PaginationResult<Comment> GetRepliesByCommentId(int commentId, Pagination pagination) { return null; }
 }

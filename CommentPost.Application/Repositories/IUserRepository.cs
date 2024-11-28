@@ -1,11 +1,12 @@
-﻿using CommentPost.Domain.Entities;
+﻿using CommentPost.Application.Filters;
+using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.Repositories;
 
 public interface IUserRepository
 {
 	// Get
-	public IQueryable<User> GetAll();
+	public PaginationResult<User> GetAll();
 	public User? GetById(int id);
 
 	// Create
