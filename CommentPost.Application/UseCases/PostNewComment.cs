@@ -1,4 +1,5 @@
 ﻿using CommentPost.Application.Repositories;
+using CommentPost.Application.Services;
 using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.UseCases;
@@ -15,10 +16,12 @@ public class PostNewCommentRequest
 public class PostNewComment
 {
 	readonly ICommentRepository _commentRepository;
+	readonly IUnitOfWork _unitOfWork;
 
-	public PostNewComment(ICommentRepository commentRepository)
+	public PostNewComment(ICommentRepository commentRepository, IUnitOfWork unitOfWork)
 	{
 		_commentRepository = commentRepository;
+		_unitOfWork = unitOfWork;
 	}
 
 
@@ -31,6 +34,13 @@ public class PostNewComment
 			Text = request.Text
 		};
 
-		return await _commentRepository.Create(comment);
+		// create
+		Comment? createdComment = await _commentRepository.Create(comment);
+
+		// save
+		bool saved = await _unitOfWork.SaveAsync();
+		if (!saved) return null;
+
+		return createdComment;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using CommentPost.Application.Repositories;
+using CommentPost.Application.Services;
 using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.UseCases;
@@ -15,12 +16,13 @@ public class PostNewReplyCommentRequest
 public class PostNewReplyComment
 {
 	readonly ICommentRepository _commentRepository;
+	readonly IUnitOfWork _unitOfWork;
 
-	public PostNewReplyComment(ICommentRepository commentRepository)
+	public PostNewReplyComment(ICommentRepository commentRepository, IUnitOfWork unitOfWork)
 	{
 		_commentRepository = commentRepository;
+		_unitOfWork = unitOfWork;
 	}
-
 
 	public async Task<Comment?> ExecuteAsync(PostNewReplyCommentRequest request)
 	{
@@ -40,6 +42,14 @@ public class PostNewReplyComment
 			ReplyId = originalComment.ReplyId ?? originalComment.ID
 		};
 
-		return await _commentRepository.Create(comment);
+
+		// create
+		Comment? createdComment = await _commentRepository.Create(comment);
+
+		// save
+		bool saved = await _unitOfWork.SaveAsync();
+		if (!saved) return null;
+
+		return createdComment;
 	}
 }
