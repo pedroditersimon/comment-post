@@ -6,10 +6,10 @@ namespace CommentPost.Application.Repositories;
 public interface ICommentRepository
 {
 	// Get
-	public PaginationResult<User> GetAll(Pagination pagination);
 	public Comment? GetById(int id);
-	public Comment? GetByPageId(string pageId);
-	public Comment? GetByReplyId(int replyId);
+	public PaginationResult<Comment> GetAll(Pagination pagination);
+	public PaginationResult<Comment> GetAllByPageId(string pageId, Pagination pagination);
+	public PaginationResult<Comment> GetAllByReplyId(int replyId, Pagination pagination);
 	public PaginationResult<Comment> SearchByText(string text, Pagination pagination);
 
 	// Create
