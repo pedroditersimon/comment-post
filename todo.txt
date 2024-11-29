@@ -7,7 +7,7 @@ Todo:
 	https://github.com/iayti/CleanArchitecture/blob/master/src
 	x (infra) Crear ApplicationDBContext
 	x (infra) Implementar ICommentRepository con el DBContext
-	- (infra) Implementar IUnitOfWork en EF
+	x (infra) Implementar IUnitOfWork en EF
 	- (infra) Configurar servicios por extension de IServiceCollection 
 	- (infra) Hacer la conexion con PosgreSQL en el ApplicationDBContext
 
