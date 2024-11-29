@@ -1,6 +1,6 @@
 ﻿namespace CommentPost.Application.Services;
 
-public interface IUnitOfWork
+public interface IUnitOfWork : IDisposable
 {
 	/// <summary>
 	/// Applies all database changes. </summary>
