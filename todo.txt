@@ -1,6 +1,16 @@
 
 Todo:
--
+- Agregar servicio para chekear lenguaje inapropiado
+- Agregar sort by creation date de los comentarios al obtener del servicio
+- (api) Utilizar los comandos de la Application como DTOs en la request del controller
+- Implementar EF en la infraestructura
+	https://github.com/iayti/CleanArchitecture/blob/master/src
+	x (infra) Crear ApplicationDBContext
+	x (infra) Implementar ICommentRepository con el DBContext
+	- (infra) Configurar servicios por extencion de IServiceCollection 
+
+- Authorization (linea 75)
+https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 
 Done:
 - Implementar Pagination y PaginationResult<T> en repositorios
