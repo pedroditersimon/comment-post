@@ -10,6 +10,11 @@ Todo:
 	x (infra) Implementar IUnitOfWork en EF
 	x (infra) Configurar servicios por extension de IServiceCollection 
 	- (infra) Hacer la conexion con PosgreSQL en el ApplicationDBContext
+- SEPARAR LO Q ES DE LA INFRA A LO Q ES DE LA API
+	- por ejemplo: IServiceCollection meterlo en api
+		la configuracion del dbcontext puede qeudar en infra pero IServiceCollection no
+	- Ver bien lo del unit of work, su abstraccion de save quiza no sea adecuada para Application
+		imaginate tener guardado en archivos, no tiene un Save()
 
 - Authorization (linea 75)
 https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
