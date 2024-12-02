@@ -8,6 +8,8 @@ Todo:
 	- Ver bien lo del unit of work, su abstraccion de save quiza no sea adecuada para Application
 		imaginate tener guardado en archivos, no tiene un Save()
 - (api) Hacer controladores
+	- Comment
+	- User
 
 - Authorization (linea 75)
 https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
