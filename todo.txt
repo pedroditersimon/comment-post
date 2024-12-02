@@ -3,7 +3,7 @@ Todo:
 - Agregar servicio para chekear lenguaje inapropiado
 - Agregar sort by creation date de los comentarios al obtener del servicio
 - (api) Utilizar los comandos de la Application como DTOs en la request del controller
-- Implementar EF en la infraestructura
+x Implementar EF en la infraestructura
 	https://github.com/iayti/CleanArchitecture/blob/master/src
 	x (infra) Crear ApplicationDBContext
 	x (infra) Implementar ICommentRepository con el DBContext
@@ -13,7 +13,7 @@ Todo:
 	x IServiceCollection utilizarlo unicamente en api, junto con la configuracion del DBContext.
 	- Ver bien lo del unit of work, su abstraccion de save quiza no sea adecuada para Application
 		imaginate tener guardado en archivos, no tiene un Save()
-x Hacer la conexion con PosgreSQL en el ApplicationDBContext
+- Hacer la conexion con PosgreSQL en el ApplicationDBContext
 
 
 - Authorization (linea 75)
