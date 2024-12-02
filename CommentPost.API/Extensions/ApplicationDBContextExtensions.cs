@@ -16,15 +16,16 @@ public static class ApplicationDBContextExtensions
 			PostgreSQLSettings dbSettings = provider.GetRequiredService<IOptions<PostgreSQLSettings>>().Value;
 			var connectionString = $"Host={dbSettings.Host};Username={dbSettings.User};Password={dbSettings.Pass};Database={dbSettings.DbName}";
 
-			//optionsBuilder.UseNpgsql(connectionString);
+			optionsBuilder.UseNpgsql(connectionString);
 
 			//optionsBuilder.UseLazyLoadingProxies();
 
+			/*
 			optionsBuilder.AddInterceptors(
-			//new ReadExampleInterceptor(),
-			//new SecondLevelCacheInterceptor(provider.GetRequiredService<IMemoryCache>())
-
+				new ReadExampleInterceptor(),
+				new SecondLevelCacheInterceptor(provider.GetRequiredService<IMemoryCache>())
 			);
+			*/
 		});
 
 
