@@ -28,7 +28,11 @@ public static class ApplicationDBContextExtensions
 			*/
 		});
 
+		// Create database using the DbContext
+		//context.Database.EnsureCreated();
 
+		// Create and sync database using 'dotnet ef migrations'
+		context.Database.Migrate();
 		return services;
 	}
 }

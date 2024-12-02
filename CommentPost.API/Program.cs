@@ -12,6 +12,7 @@ builder.Services.AddInfrastructureServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -22,6 +23,12 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
+app.MigrateDbContext();
+
+app.UseRouting();
+app.MapControllers();
+
 app.UseHttpsRedirection();
+app.UseAuthorization();
 
 app.Run();
