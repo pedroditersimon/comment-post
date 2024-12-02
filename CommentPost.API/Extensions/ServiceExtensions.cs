@@ -1,15 +1,14 @@
 ﻿using CommentPost.Application.Repositories;
 using CommentPost.Application.Services;
+using CommentPost.Infrastructure.EntityFramework;
 using CommentPost.Infrastructure.EntityFramework.Repositories;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace CommentPost.Infrastructure.EntityFramework.Extensions;
+namespace CommentPost.API.Extensions;
 
-public static class InfraestructureServiceExtensions
+public static class ServiceExtensions
 {
 	public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
 	{
-
 		services.AddScoped<ICommentRepository, CommentRepository>();
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
 
