@@ -23,3 +23,9 @@ x Implementar EF en la infraestructura
 	x (infra) Implementar IUnitOfWork en EF
 	x (infra) Configurar servicios por extension de IServiceCollection 
 - Hacer la conexion con PosgreSQL en el ApplicationDBContext
+
+
+
+------------------------------
+Make a ef migration: (in the solution root folder)
+dotnet ef migrations add Initial --project CommentPost.Infrastructure --startup-project CommentPost.API -o EntityFramework/Migrations

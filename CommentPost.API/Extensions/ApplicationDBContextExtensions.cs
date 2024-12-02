@@ -9,7 +9,6 @@ public static class ApplicationDBContextExtensions
 {
 	public static IServiceCollection AddApplicationDBContext(this IServiceCollection services)
 	{
-
 		// configure DBContext of PostgreDBService, using loaded settings
 		services.AddDbContext<ApplicationDBContext>((IServiceProvider provider, DbContextOptionsBuilder optionsBuilder) =>
 		{
@@ -27,6 +26,9 @@ public static class ApplicationDBContextExtensions
 			);
 			*/
 		});
+
+		services.AddScoped<ApplicationDBContext>();
+		services.AddScoped<DbContext, ApplicationDBContext>();
 
 		return services;
 	}
