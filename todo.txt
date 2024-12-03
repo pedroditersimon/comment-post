@@ -7,6 +7,7 @@ Todo:
 	- Comment
 	- User
 - Hacer un Repositorio generico
+- Utilizar otra base de datos como MySQL, ver SQL Server.
 
 - Authorization (linea 75)
 https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
