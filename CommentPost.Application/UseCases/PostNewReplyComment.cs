@@ -18,9 +18,9 @@ public class PostNewReplyComment
 	readonly ICommentRepository _commentRepository;
 	readonly IUnitOfWork _unitOfWork;
 
-	public PostNewReplyComment(ICommentRepository commentRepository, IUnitOfWork unitOfWork)
+	public PostNewReplyComment(IUnitOfWork unitOfWork)
 	{
-		_commentRepository = commentRepository;
+		_commentRepository = unitOfWork.CommentRepository;
 		_unitOfWork = unitOfWork;
 	}
 
@@ -47,7 +47,7 @@ public class PostNewReplyComment
 		Comment? createdComment = await _commentRepository.Create(comment);
 
 		// save
-		bool saved = await _unitOfWork.SaveAsync();
+		bool saved = await _unitOfWork.ApplyChangesAsync();
 		if (!saved) return null;
 
 		return createdComment;

@@ -3,13 +3,10 @@ Todo:
 - Agregar servicio para chekear lenguaje inapropiado
 - Agregar sort by creation date de los comentarios al obtener del servicio
 - (api) Utilizar los comandos de la Application como DTOs en la request del controller
-- Separar la Infraestructura de la API
-	x IServiceCollection utilizarlo unicamente en api, junto con la configuracion del DBContext.
-	- Ver bien lo del unit of work, su abstraccion de save quiza no sea adecuada para Application
-		imaginate tener guardado en archivos, no tiene un Save()
 - (api) Hacer controladores
 	- Comment
 	- User
+- Hacer un Repositorio generico
 
 - Authorization (linea 75)
 https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
@@ -23,7 +20,10 @@ x Implementar EF en la infraestructura
 	x (infra) Implementar IUnitOfWork en EF
 	x (infra) Configurar servicios por extension de IServiceCollection 
 - Hacer la conexion con PosgreSQL en el ApplicationDBContext
-
+- Separar la Infraestructura de la API
+	x IServiceCollection utilizarlo unicamente en api, junto con la configuracion del DBContext.
+	x Ver bien lo del unit of work, su abstraccion de save quiza no sea adecuada para Application
+		imaginate tener guardado en archivos, no tiene un Save()
 
 
 ------------------------------
