@@ -2,7 +2,7 @@
 
 public class PaginationResult<T> : Pagination
 {
-	public IQueryable<T> Elements { get; set; }
+	public IQueryable<T> Elements { get; }
 
 	public long Count => Elements.Count();
 
