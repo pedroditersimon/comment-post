@@ -1,10 +1,15 @@
-﻿using System.Collections.Immutable;
-
-namespace CommentPost.Application.Filters;
+﻿namespace CommentPost.Application.Filters;
 
 public class PaginationResult<T> : Pagination
 {
-	public required ImmutableArray<T> Elements { get; set; }
+	public IQueryable<T> Elements { get; set; }
 
-	public long Count => Elements.Length;
+	public long Count => Elements.Count();
+
+	public PaginationResult(IQueryable<T> elements, Pagination pagination)
+	{
+		Offset = pagination.Offset;
+		Limit = pagination.Limit;
+		Elements = elements;
+	}
 }
