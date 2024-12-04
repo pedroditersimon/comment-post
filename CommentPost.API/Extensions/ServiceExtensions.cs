@@ -9,6 +9,7 @@ public static class ServiceExtensions
 {
 	public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
 	{
+		services.AddScoped<IUserRepository, UserRepository>();
 		services.AddScoped<ICommentRepository, CommentRepository>();
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
 
