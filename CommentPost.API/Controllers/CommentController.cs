@@ -1,6 +1,5 @@
 ﻿using CommentPost.Application.DTOs.Comment;
 using CommentPost.Application.Mappers;
-using CommentPost.Application.Repositories;
 using CommentPost.Application.Services;
 using CommentPost.Application.UseCases.Comments;
 using CommentPost.Application.UseCases.Comments.Moderator;
@@ -14,11 +13,9 @@ namespace CommentPost.API.Controllers;
 public class CommentController : ControllerBase
 {
 	readonly IUnitOfWork _unityOfWork;
-	readonly ICommentRepository _commentRepository;
 
 	public CommentController(IUnitOfWork unitOfWork)
 	{
-		_commentRepository = unitOfWork.CommentRepository;
 		_unityOfWork = unitOfWork;
 	}
 
@@ -26,7 +23,11 @@ public class CommentController : ControllerBase
 	[HttpGet("{id}")]
 	public async Task<ActionResult<CommentResponse?>> Get(int id)
 	{
-		Comment? comment = await _commentRepository.GetById(id);
+		GetComentByIdCommand command = new() { CommentId = id };
+		GetComentByIdHandler handler = new(_unityOfWork.CommentRepository);
+
+		// execute
+		Comment? comment = await handler.ExecuteAsync(command);
 		if (comment == null)
 			return NotFound();
 

@@ -7,7 +7,6 @@ Todo:
 	- Comment
 	- User
 - Utilizar otra base de datos como MySQL, ver SQL Server.
-- Sacar repositorio del controllador, pasar el get by id a un caso de uso
 - Implementar la paginacion en los repositorios
 - Agregar endpoints de get by page id and by replies
 - Proteger las rutas de moderador
@@ -36,7 +35,7 @@ x Implementar EF en la infraestructura
 		imaginate tener guardado en archivos, no tiene un Save()
 - Hacer un Repositorio generico
 - Agregar endpoint Patch de comment controller
-
+- Sacar repositorio del controllador, pasar el get by id a un caso de uso
 
 
 
