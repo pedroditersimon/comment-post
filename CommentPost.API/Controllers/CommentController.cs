@@ -2,7 +2,8 @@
 using CommentPost.Application.Mappers;
 using CommentPost.Application.Repositories;
 using CommentPost.Application.Services;
-using CommentPost.Application.UseCases;
+using CommentPost.Application.UseCases.Comments;
+using CommentPost.Application.UseCases.Comments.Moderator;
 using CommentPost.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +50,19 @@ public class CommentController : ControllerBase
 	public async Task<ActionResult<CommentResponse?>> PostReply(PostNewReplyCommentCommand command)
 	{
 		PostNewReplyCommentHandler handler = new(_unityOfWork);
+
+		// execute
+		Comment? comment = await handler.ExecuteAsync(command);
+		if (comment == null)
+			return Conflict();
+
+		return Ok(comment.ToResponse());
+	}
+
+	[HttpPatch]
+	public async Task<ActionResult<CommentResponse?>> Patch(UpdateCommentByModCommand command)
+	{
+		UpdateCommentByModHandler handler = new(_unityOfWork);
 
 		// execute
 		Comment? comment = await handler.ExecuteAsync(command);

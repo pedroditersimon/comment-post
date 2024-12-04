@@ -7,11 +7,11 @@ Todo:
 	- Comment
 	- User
 - Utilizar otra base de datos como MySQL, ver SQL Server.
-- Agregar endpoint Patch de comment controller
 - Sacar repositorio del controllador, pasar el get by id a un caso de uso
 - Implementar la paginacion en los repositorios
 - Agregar endpoints de get by page id and by replies
-
+- Proteger las rutas de moderador
+ 
 - Authorization (linea 75)
 https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 
@@ -34,7 +34,7 @@ x Implementar EF en la infraestructura
 	x Ver bien lo del unit of work, su abstraccion de save quiza no sea adecuada para Application
 		imaginate tener guardado en archivos, no tiene un Save()
 - Hacer un Repositorio generico
-
+- Agregar endpoint Patch de comment controller
 
 
 
