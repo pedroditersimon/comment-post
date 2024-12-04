@@ -2,9 +2,8 @@
 Todo:
 - Agregar servicio para chekear lenguaje inapropiado
 - Agregar sort by creation date de los comentarios antes de la paginacion
-- (api) Utilizar los comandos de la Application como DTOs en la request del controller
 - (api) Hacer controladores
-	- Comment
+	x Comment
 	- User
 - Utilizar otra base de datos como MySQL, ver SQL Server.
 - Proteger las rutas de moderador
@@ -36,7 +35,7 @@ x Implementar EF en la infraestructura
 - Sacar repositorio del controllador, pasar el get by id a un caso de uso
 - Implementar la paginacion en los repositorios
 - Agregar endpoints de get by page id and by replies
-
+- (api) Utilizar los comandos de la Application como DTOs en la request del controller
 
 
 
