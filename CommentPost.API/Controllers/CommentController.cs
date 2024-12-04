@@ -1,16 +1,30 @@
-﻿using CommentPost.Domain.Entities;
+﻿using CommentPost.Application.DTOs.Comment;
+using CommentPost.Application.Mappers;
+using CommentPost.Application.Repositories;
+using CommentPost.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommentPost.API.Controllers;
 
 [ApiController]
 [Route("comments")]
-public class CommentController
+public class CommentController : ControllerBase
 {
+	readonly ICommentRepository _commentRepository;
+
+	public CommentController(ICommentRepository commentRepository)
+	{
+		_commentRepository = commentRepository;
+	}
+
 
 	[HttpGet("{id}")]
-	public ActionResult<Comment> Get(int id)
+	public async Task<ActionResult<CommentResponse?>> Get(int id)
 	{
-		return new Comment() { ID = id, Text = "comment text" };
+		Comment? comment = await _commentRepository.GetById(id);
+		if (comment == null)
+			return NotFound();
+
+		return Ok(comment.ToResponse());
 	}
 }

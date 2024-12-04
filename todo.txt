@@ -11,6 +11,11 @@ Todo:
 - Authorization (linea 75)
 https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 
+
+
+
+
+
 Done:
 - Implementar Pagination y PaginationResult<T> en repositorios
 x Implementar EF en la infraestructura
@@ -25,6 +30,13 @@ x Implementar EF en la infraestructura
 	x Ver bien lo del unit of work, su abstraccion de save quiza no sea adecuada para Application
 		imaginate tener guardado en archivos, no tiene un Save()
 - Hacer un Repositorio generico
+
+
+
+
+
+
+
 
 ------------------------------
 Make a ef migration: (in the solution root folder)
