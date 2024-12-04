@@ -6,7 +6,6 @@ Todo:
 - (api) Hacer controladores
 	- Comment
 	- User
-- Hacer un Repositorio generico
 - Utilizar otra base de datos como MySQL, ver SQL Server.
 
 - Authorization (linea 75)
@@ -25,7 +24,7 @@ x Implementar EF en la infraestructura
 	x IServiceCollection utilizarlo unicamente en api, junto con la configuracion del DBContext.
 	x Ver bien lo del unit of work, su abstraccion de save quiza no sea adecuada para Application
 		imaginate tener guardado en archivos, no tiene un Save()
-
+- Hacer un Repositorio generico
 
 ------------------------------
 Make a ef migration: (in the solution root folder)
