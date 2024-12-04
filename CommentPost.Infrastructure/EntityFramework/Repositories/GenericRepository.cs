@@ -1,4 +1,5 @@
 ﻿using CommentPost.Application.Filters;
+using CommentPost.Application.Mappers;
 using CommentPost.Application.Repositories;
 using CommentPost.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ public class GenericRepository<T, Tid> : IGenericRepository<T, Tid>
 	// Get
 	public async Task<PaginationResult<T>> GetAll(Pagination pagination)
 	{
-		throw new NotImplementedException();
+		return pagination.GetPaged(Entities);
 	}
 
 	public async Task<T?> GetById(Tid id)
