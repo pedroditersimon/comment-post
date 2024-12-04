@@ -8,7 +8,8 @@ Todo:
 	- User
 - Utilizar otra base de datos como MySQL, ver SQL Server.
 - Implementar la paginacion en los repositorios
-- Implementar Patch de comment controller
+- Agregar endpoint Patch de comment controller
+- Agregar endpoints de get by page id and by replies
 
 - Authorization (linea 75)
 https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
