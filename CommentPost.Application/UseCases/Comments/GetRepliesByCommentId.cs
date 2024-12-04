@@ -5,25 +5,25 @@ using CommentPost.Application.Repositories;
 using CommentPost.Domain.Entities;
 
 // Leer respuestas de comentarios: Un usuario lee las respuestas de un comentario.
-public class GetRepliesByCommentIdCommand : Pagination
+public class GetCommentRepliesCommand : Pagination
 {
-    public int CommentId { get; set; }
+	public int CommentId { get; set; }
 }
 
-public class GetRepliesByCommentIdHandler
+public class GetCommentRepliesHandler
 {
-    readonly ICommentRepository _commentRepository;
+	readonly ICommentRepository _commentRepository;
 
-    public GetRepliesByCommentIdHandler(ICommentRepository commentRepository)
-    {
-        _commentRepository = commentRepository;
-    }
+	public GetCommentRepliesHandler(ICommentRepository commentRepository)
+	{
+		_commentRepository = commentRepository;
+	}
 
 
-    public async Task<PaginationResult<Comment>> ExecuteAsync(GetRepliesByCommentIdCommand command)
-    {
-        Pagination pagination = command;
+	public async Task<PaginationResult<Comment>> ExecuteAsync(GetCommentRepliesCommand command)
+	{
+		Pagination pagination = command;
 
-        return await _commentRepository.GetAllByReplyId(command.CommentId, pagination);
-    }
+		return await _commentRepository.GetAllByReplyId(command.CommentId, pagination);
+	}
 }
