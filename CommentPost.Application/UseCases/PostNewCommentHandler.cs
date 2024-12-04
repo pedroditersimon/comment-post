@@ -6,32 +6,32 @@ namespace CommentPost.Application.UseCases;
 
 // Postear comentarios: Un usuario registrado crea un nuevo comentario en la plataforma.
 
-public class PostNewCommentRequest
+public class PostNewCommentCommand
 {
 	public int UserId { get; set; }
 	public string PageId { get; set; }
 	public string Text { get; set; }
 }
 
-public class PostNewComment
+public class PostNewCommentHandler
 {
 	readonly ICommentRepository _commentRepository;
 	readonly IUnitOfWork _unitOfWork;
 
-	public PostNewComment(IUnitOfWork unitOfWork)
+	public PostNewCommentHandler(IUnitOfWork unitOfWork)
 	{
 		_commentRepository = unitOfWork.CommentRepository;
 		_unitOfWork = unitOfWork;
 	}
 
 
-	public async Task<Comment?> ExecuteAsync(PostNewCommentRequest request)
+	public async Task<Comment?> ExecuteAsync(PostNewCommentCommand command)
 	{
 		Comment comment = new()
 		{
-			UserId = request.UserId,
-			PageId = request.PageId,
-			Text = request.Text
+			UserId = command.UserId,
+			PageId = command.PageId,
+			Text = command.Text
 		};
 
 		// create

@@ -6,25 +6,25 @@ namespace CommentPost.Application.UseCases;
 
 // Leer comentarios: Visualizar los comentarios publicados en una página.
 
-public class GetCommentsByPageIdRequest : Pagination
+public class GetCommentsByPageIdCommand : Pagination
 {
 	public string PageId { get; set; }
 }
 
-public class GetCommentsByPageId
+public class GetCommentsByPageIdHandler
 {
 	readonly ICommentRepository _commentRepository;
 
-	public GetCommentsByPageId(ICommentRepository commentRepository)
+	public GetCommentsByPageIdHandler(ICommentRepository commentRepository)
 	{
 		_commentRepository = commentRepository;
 	}
 
 
-	public async Task<PaginationResult<Comment>> ExecuteAsync(GetCommentsByPageIdRequest request)
+	public async Task<PaginationResult<Comment>> ExecuteAsync(GetCommentsByPageIdCommand command)
 	{
-		Pagination pagination = request;
+		Pagination pagination = command;
 
-		return await _commentRepository.GetAllByPageId(request.PageId, pagination);
+		return await _commentRepository.GetAllByPageId(command.PageId, pagination);
 	}
 }

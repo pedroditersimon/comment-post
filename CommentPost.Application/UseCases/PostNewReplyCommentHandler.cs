@@ -6,27 +6,27 @@ namespace CommentPost.Application.UseCases;
 
 // Responder comentarios: Un usuario registrado responde a un comentario existente.
 
-public class PostNewReplyCommentRequest
+public class PostNewReplyCommentCommand
 {
 	public int UserId { get; set; }
 	public string Text { get; set; }
 	public int ReplyId { get; set; }
 }
 
-public class PostNewReplyComment
+public class PostNewReplyCommentHandler
 {
 	readonly ICommentRepository _commentRepository;
 	readonly IUnitOfWork _unitOfWork;
 
-	public PostNewReplyComment(IUnitOfWork unitOfWork)
+	public PostNewReplyCommentHandler(IUnitOfWork unitOfWork)
 	{
 		_commentRepository = unitOfWork.CommentRepository;
 		_unitOfWork = unitOfWork;
 	}
 
-	public async Task<Comment?> ExecuteAsync(PostNewReplyCommentRequest request)
+	public async Task<Comment?> ExecuteAsync(PostNewReplyCommentCommand command)
 	{
-		Comment? originalComment = await _commentRepository.GetById(request.ReplyId);
+		Comment? originalComment = await _commentRepository.GetById(command.ReplyId);
 
 		// not found
 		if (originalComment == null)
@@ -35,8 +35,8 @@ public class PostNewReplyComment
 		// map
 		Comment comment = new()
 		{
-			UserId = request.UserId,
-			Text = request.Text,
+			UserId = command.UserId,
+			Text = command.Text,
 
 			// if original comment is already a reply, point to the same reply
 			ReplyId = originalComment.ReplyId ?? originalComment.ID
