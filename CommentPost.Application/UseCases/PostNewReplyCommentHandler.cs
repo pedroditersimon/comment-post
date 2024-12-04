@@ -36,10 +36,14 @@ public class PostNewReplyCommentHandler
 		Comment comment = new()
 		{
 			UserId = command.UserId,
-			Text = command.Text,
 
 			// if original comment is already a reply, point to the same reply
-			ReplyId = originalComment.ReplyId ?? originalComment.ID
+			ReplyId = originalComment.ReplyId ?? originalComment.ID,
+
+			// inherit page id from original comment
+			PageId = originalComment.PageId,
+
+			Text = command.Text,
 		};
 
 
