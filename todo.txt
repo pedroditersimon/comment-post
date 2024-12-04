@@ -11,7 +11,8 @@ Todo:
 - Implementar la paginacion en los repositorios
 - Agregar endpoints de get by page id and by replies
 - Proteger las rutas de moderador
- 
+- Agregar excepciones de Application
+
 - Authorization (linea 75)
 https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 
