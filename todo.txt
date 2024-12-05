@@ -8,8 +8,10 @@ https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitectur
 - Proteger las rutas de moderador
 - Verificar que el usuario userID existe antes de crear/editar un comentario y meterlo en la bbdd
 - Agregar concurrency check
-- Hacer tests
-
+- Hacer tests de servicios
+- Hacer tests de mappers
+- Hacer tests de paginacion
+- Quitar el async Task y devolver IQueryable en los repositorios
 
 Done:
 - Implementar Pagination y PaginationResult<T> en repositorios
@@ -36,7 +38,7 @@ x Implementar EF en la infraestructura
 - Agregar sort by creation date de los comentarios antes de la paginacion
 - Agregar excepciones de Application
 - Manejar las excepciones en el controlador y devolver su respectivo codigo HTTP (404,409)
-
+- Hacer tests de casos de uso
 
 ------------------------------
 Make a ef migration: (in the solution root folder)
