@@ -11,7 +11,8 @@ https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitectur
 - Hacer tests
 - Verificar que el usuario userID existe antes de crear/editar un comentario y meterlo en la bbdd
 - Agregar concurrency check
-
+- Usar Servicios para los casos de uso y no repositorios,
+	asi se puede agregar logica especifica como sort y paginacion en la capa Application
 
 
 Done:
