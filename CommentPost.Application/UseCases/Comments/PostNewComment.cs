@@ -38,7 +38,8 @@ public class PostNewCommentHandler
 
 		// save
 		bool saved = await _unitOfWork.ApplyChangesAsync();
-		if (!saved) return null;
+		if (!saved)
+			throw new Exception("Cannot save");
 
 		return createdComment;
 	}

@@ -29,7 +29,7 @@ public class PostNewReplyCommentHandler
 
 		// not found
 		if (originalComment == null)
-			return null;
+			throw new Exception("Not found");
 
 		// map
 		Comment comment = new()
@@ -51,7 +51,8 @@ public class PostNewReplyCommentHandler
 
 		// save
 		bool saved = await _unitOfWork.ApplyChangesAsync();
-		if (!saved) return null;
+		if (!saved)
+			throw new Exception("Cannot save");
 
 		return createdComment;
 	}
