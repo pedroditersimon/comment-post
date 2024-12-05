@@ -1,4 +1,5 @@
 ﻿using CommentPost.Application.DTOs.Comment;
+using CommentPost.Application.Exceptions;
 using CommentPost.Application.Filters;
 using CommentPost.Application.Mappers;
 using CommentPost.Application.Services;
@@ -28,10 +29,24 @@ public class CommentController : ControllerBase
 	{
 		PostNewCommentHandler handler = new(_commentService, _unitOfWork);
 
+		Comment? comment;
+
 		// execute
-		Comment? comment = await handler.ExecuteAsync(command);
+		try
+		{
+			comment = await handler.ExecuteAsync(command);
+		}
+		catch (CreateResourceException)
+		{
+			return StatusCode(500); // Internal Server Error
+		}
+		catch (SaveChangesException)
+		{
+			return StatusCode(503); // Service Unavailable
+		}
+
 		if (comment == null)
-			return Conflict();
+			return StatusCode(500); // Internal Server Error
 
 		return Ok(comment.ToResponse());
 	}
@@ -41,8 +56,26 @@ public class CommentController : ControllerBase
 	{
 		PostNewReplyCommentHandler handler = new(_commentService, _unitOfWork);
 
+		Comment? comment;
+
 		// execute
-		Comment? comment = await handler.ExecuteAsync(command);
+		try
+		{
+			comment = await handler.ExecuteAsync(command);
+		}
+		catch (NotFoundException)
+		{
+			return NotFound();
+		}
+		catch (CreateResourceException)
+		{
+			return StatusCode(500); // Internal Server Error
+		}
+		catch (SaveChangesException)
+		{
+			return StatusCode(503); // Service Unavailable
+		}
+
 		if (comment == null)
 			return Conflict();
 
@@ -55,8 +88,18 @@ public class CommentController : ControllerBase
 		GetComentByIdCommand command = new() { CommentId = id };
 		GetComentByIdHandler handler = new(_commentService);
 
+		Comment? comment;
+
 		// execute
-		Comment? comment = await handler.ExecuteAsync(command);
+		try
+		{
+			comment = await handler.ExecuteAsync(command);
+		}
+		catch (NotFoundException)
+		{
+			return NotFound();
+		}
+
 		if (comment == null)
 			return NotFound();
 
@@ -109,10 +152,28 @@ public class CommentController : ControllerBase
 	{
 		UpdateCommentByModHandler handler = new(_commentService, _unitOfWork);
 
+		Comment? comment;
+
 		// execute
-		Comment? comment = await handler.ExecuteAsync(command);
+		try
+		{
+			comment = await handler.ExecuteAsync(command);
+		}
+		catch (NotFoundException)
+		{
+			return NotFound();
+		}
+		catch (UpdateResourceException)
+		{
+			return StatusCode(500); // Internal Server Error
+		}
+		catch (SaveChangesException)
+		{
+			return StatusCode(503); // Service Unavailable
+		}
+
 		if (comment == null)
-			return Conflict();
+			return StatusCode(500); // Internal Server Error
 
 		return Ok(comment.ToResponse());
 	}
