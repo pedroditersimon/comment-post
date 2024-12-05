@@ -1,7 +1,6 @@
 
 Todo:
 - Agregar servicio para chekear lenguaje inapropiado
-- Agregar sort by creation date de los comentarios antes de la paginacion
 - (api) Hacer controlador de User
 - Agregar excepciones de Application
 - Utilizar otra base de datos como MySQL, ver SQL Server.
@@ -35,6 +34,9 @@ x Implementar EF en la infraestructura
 - (api) Hacer controlador de Comment
 - Usar Servicios para los casos de uso y no repositorios,
 	asi se puede agregar logica especifica como sort y paginacion en la capa Application
+- Agregar sort by creation date de los comentarios antes de la paginacion
+
+
 
 ------------------------------
 Make a ef migration: (in the solution root folder)

@@ -20,7 +20,8 @@ public class GenericService<T, Tid> : IGenericService<T, Tid>
 	public async Task<PaginationResult<T>> GetAll(Pagination pagination)
 	{
 		IQueryable<T> elements = await _repository.GetAll();
-		return pagination.GetPaged(elements);
+		IQueryable<T> sortedElements = elements.OrderBy(e => e.CreationDate);
+		return pagination.GetPaged(sortedElements);
 	}
 
 	public async Task<T?> GetById(Tid id)

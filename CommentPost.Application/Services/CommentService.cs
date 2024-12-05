@@ -23,18 +23,21 @@ public class CommentService : GenericService<Comment, int>, ICommentService
 	public async Task<PaginationResult<Comment>> GetAllByPageId(string pageId, Pagination pagination)
 	{
 		IQueryable<Comment> elements = await _commentRepository.GetAllByPageId(pageId);
-		return pagination.GetPaged(elements);
+		IQueryable<Comment> sortedElements = elements.OrderBy(e => e.CreationDate);
+		return pagination.GetPaged(sortedElements);
 	}
 
 	public async Task<PaginationResult<Comment>> GetAllByReplyId(int replyId, Pagination pagination)
 	{
 		IQueryable<Comment> elements = await _commentRepository.GetAllByReplyId(replyId);
-		return pagination.GetPaged(elements);
+		IQueryable<Comment> sortedElements = elements.OrderBy(e => e.CreationDate);
+		return pagination.GetPaged(sortedElements);
 	}
 
 	public async Task<PaginationResult<Comment>> SearchByText(string text, Pagination pagination)
 	{
 		IQueryable<Comment> elements = await _commentRepository.SearchByText(text);
-		return pagination.GetPaged(elements);
+		IQueryable<Comment> sortedElements = elements.OrderBy(e => e.CreationDate);
+		return pagination.GetPaged(sortedElements);
 	}
 }
