@@ -6,9 +6,9 @@ Todo:
 - Authorization (linea 75)
 https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 - Proteger las rutas de moderador
-- Hacer tests
 - Verificar que el usuario userID existe antes de crear/editar un comentario y meterlo en la bbdd
 - Agregar concurrency check
+- Hacer tests
 
 
 Done:
