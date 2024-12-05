@@ -1,5 +1,5 @@
 ﻿using CommentPost.Application.Filters;
-using CommentPost.Application.Repositories;
+using CommentPost.Application.Services;
 using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.UseCases.Comments;
@@ -8,23 +8,23 @@ namespace CommentPost.Application.UseCases.Comments;
 
 public class GetCommentsByPageIdCommand : Pagination
 {
-    public string PageId { get; set; }
+	public string PageId { get; set; }
 }
 
 public class GetCommentsByPageIdHandler
 {
-    readonly ICommentRepository _commentRepository;
+	readonly ICommentService _commentService;
 
-    public GetCommentsByPageIdHandler(ICommentRepository commentRepository)
-    {
-        _commentRepository = commentRepository;
-    }
+	public GetCommentsByPageIdHandler(ICommentService commentService)
+	{
+		_commentService = commentService;
+	}
 
 
-    public async Task<PaginationResult<Comment>> ExecuteAsync(GetCommentsByPageIdCommand command)
-    {
-        Pagination pagination = command;
+	public async Task<PaginationResult<Comment>> ExecuteAsync(GetCommentsByPageIdCommand command)
+	{
+		Pagination pagination = command;
 
-        return await _commentRepository.GetAllByPageId(command.PageId, pagination);
-    }
+		return await _commentService.GetAllByPageId(command.PageId, pagination);
+	}
 }

@@ -11,8 +11,6 @@ https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitectur
 - Hacer tests
 - Verificar que el usuario userID existe antes de crear/editar un comentario y meterlo en la bbdd
 - Agregar concurrency check
-- Usar Servicios para los casos de uso y no repositorios,
-	asi se puede agregar logica especifica como sort y paginacion en la capa Application
 
 
 Done:
@@ -35,7 +33,8 @@ x Implementar EF en la infraestructura
 - Agregar endpoints de get by page id and by replies
 - (api) Utilizar los comandos de la Application como DTOs en la request del controller
 - (api) Hacer controlador de Comment
-
+- Usar Servicios para los casos de uso y no repositorios,
+	asi se puede agregar logica especifica como sort y paginacion en la capa Application
 
 ------------------------------
 Make a ef migration: (in the solution root folder)

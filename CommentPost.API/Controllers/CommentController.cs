@@ -13,18 +13,20 @@ namespace CommentPost.API.Controllers;
 [Route("comments")]
 public class CommentController : ControllerBase
 {
-	readonly IUnitOfWork _unityOfWork;
+	readonly IUnitOfWork _unitOfWork;
+	readonly ICommentService _commentService;
 
-	public CommentController(IUnitOfWork unitOfWork)
+	public CommentController(ICommentService commentService, IUnitOfWork unitOfWork)
 	{
-		_unityOfWork = unitOfWork;
+		_unitOfWork = unitOfWork;
+		_commentService = commentService;
 	}
 
 
 	[HttpPost]
 	public async Task<ActionResult<CommentResponse?>> Post([FromBody] PostNewCommentCommand command)
 	{
-		PostNewCommentHandler handler = new(_unityOfWork);
+		PostNewCommentHandler handler = new(_commentService, _unitOfWork);
 
 		// execute
 		Comment? comment = await handler.ExecuteAsync(command);
@@ -37,7 +39,7 @@ public class CommentController : ControllerBase
 	[HttpPost("reply")]
 	public async Task<ActionResult<CommentResponse?>> PostReply([FromBody] PostNewReplyCommentCommand command)
 	{
-		PostNewReplyCommentHandler handler = new(_unityOfWork);
+		PostNewReplyCommentHandler handler = new(_commentService, _unitOfWork);
 
 		// execute
 		Comment? comment = await handler.ExecuteAsync(command);
@@ -51,7 +53,7 @@ public class CommentController : ControllerBase
 	public async Task<ActionResult<CommentResponse?>> Get(int id)
 	{
 		GetComentByIdCommand command = new() { CommentId = id };
-		GetComentByIdHandler handler = new(_unityOfWork.CommentRepository);
+		GetComentByIdHandler handler = new(_commentService);
 
 		// execute
 		Comment? comment = await handler.ExecuteAsync(command);
@@ -70,7 +72,7 @@ public class CommentController : ControllerBase
 			Offset = offset,
 			Limit = limit
 		};
-		GetCommentsByPageIdHandler handler = new(_unityOfWork.CommentRepository);
+		GetCommentsByPageIdHandler handler = new(_commentService);
 
 		// execute
 		PaginationResult<Comment> comments = await handler.ExecuteAsync(command);
@@ -91,7 +93,7 @@ public class CommentController : ControllerBase
 			Offset = offset,
 			Limit = limit
 		};
-		GetCommentRepliesHandler handler = new(_unityOfWork.CommentRepository);
+		GetCommentRepliesHandler handler = new(_commentService);
 
 		// execute
 		PaginationResult<Comment> comments = await handler.ExecuteAsync(command);
@@ -105,7 +107,7 @@ public class CommentController : ControllerBase
 	[HttpPatch]
 	public async Task<ActionResult<CommentResponse?>> Patch([FromBody] UpdateCommentByModCommand command)
 	{
-		UpdateCommentByModHandler handler = new(_unityOfWork);
+		UpdateCommentByModHandler handler = new(_commentService, _unitOfWork);
 
 		// execute
 		Comment? comment = await handler.ExecuteAsync(command);

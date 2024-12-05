@@ -1,5 +1,4 @@
 ﻿using CommentPost.Application.Mappers;
-using CommentPost.Application.Repositories;
 using CommentPost.Application.Services;
 using CommentPost.Domain.Entities;
 
@@ -21,19 +20,19 @@ public class UpdateCommentByModCommand
 
 public class UpdateCommentByModHandler
 {
-	readonly ICommentRepository _commentRepository;
+	readonly ICommentService _commentService;
 	readonly IUnitOfWork _unitOfWork;
 
-	public UpdateCommentByModHandler(IUnitOfWork unitOfWork)
+	public UpdateCommentByModHandler(ICommentService commentService, IUnitOfWork unitOfWork)
 	{
-		_commentRepository = unitOfWork.CommentRepository;
+		_commentService = commentService;
 		_unitOfWork = unitOfWork;
 	}
 
 	public async Task<Comment> ExecuteAsync(UpdateCommentByModCommand command)
 	{
 		// get original
-		Comment? comment = await _commentRepository.GetById(command.CommentId);
+		Comment? comment = await _commentService.GetById(command.CommentId);
 		if (command == null)
 			throw new Exception("Comment Not found");
 
@@ -43,7 +42,7 @@ public class UpdateCommentByModHandler
 			throw new Exception("Cannot replace the comment values");
 
 		// update
-		Comment? updatedComment = await _commentRepository.Update(replacedComment);
+		Comment? updatedComment = await _commentService.Update(replacedComment);
 		if (updatedComment == null)
 			throw new Exception("Cannot update the Comment");
 

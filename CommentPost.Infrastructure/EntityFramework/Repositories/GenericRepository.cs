@@ -1,6 +1,4 @@
-﻿using CommentPost.Application.Filters;
-using CommentPost.Application.Mappers;
-using CommentPost.Application.Repositories;
+﻿using CommentPost.Application.Repositories;
 using CommentPost.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,9 +17,9 @@ public class GenericRepository<T, Tid> : IGenericRepository<T, Tid>
 
 
 	// Get
-	public async Task<PaginationResult<T>> GetAll(Pagination pagination)
+	public async Task<IQueryable<T>> GetAll()
 	{
-		return pagination.GetPaged(Entities);
+		return Entities;
 	}
 
 	public async Task<T?> GetById(Tid id)
@@ -32,22 +30,22 @@ public class GenericRepository<T, Tid> : IGenericRepository<T, Tid>
 
 
 	// Create
-	public async Task<T?> Create(T comment)
+	public async Task<T?> Create(T entity)
 	{
-		comment.CreationDate = DateTime.UtcNow;
-		return Entities.Add(comment).Entity;
+		entity.CreationDate = DateTime.UtcNow;
+		return Entities.Add(entity).Entity;
 	}
 
 
 	// Update
-	public async Task<T?> Update(T comment)
+	public async Task<T?> Update(T entity)
 	{
-		T? existingEntity = await GetById(comment.ID);
+		T? existingEntity = await GetById(entity.ID);
 		if (existingEntity == null)
 			return null;
 
-		comment.LastUpdatedDate = DateTime.UtcNow;
-		_dbContext.Entry(existingEntity).CurrentValues.SetValues(comment);
+		entity.LastUpdatedDate = DateTime.UtcNow;
+		_dbContext.Entry(existingEntity).CurrentValues.SetValues(entity);
 		return existingEntity;
 	}
 

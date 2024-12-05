@@ -1,7 +1,7 @@
 ﻿namespace CommentPost.Application.UseCases.Comments;
 
 using CommentPost.Application.Filters;
-using CommentPost.Application.Repositories;
+using CommentPost.Application.Services;
 using CommentPost.Domain.Entities;
 
 // Leer respuestas de comentarios: Un usuario lee las respuestas de un comentario.
@@ -12,11 +12,11 @@ public class GetCommentRepliesCommand : Pagination
 
 public class GetCommentRepliesHandler
 {
-	readonly ICommentRepository _commentRepository;
+	readonly ICommentService _commentService;
 
-	public GetCommentRepliesHandler(ICommentRepository commentRepository)
+	public GetCommentRepliesHandler(ICommentService commentService)
 	{
-		_commentRepository = commentRepository;
+		_commentService = commentService;
 	}
 
 
@@ -24,6 +24,6 @@ public class GetCommentRepliesHandler
 	{
 		Pagination pagination = command;
 
-		return await _commentRepository.GetAllByReplyId(command.CommentId, pagination);
+		return await _commentService.GetAllByReplyId(command.CommentId, pagination);
 	}
 }

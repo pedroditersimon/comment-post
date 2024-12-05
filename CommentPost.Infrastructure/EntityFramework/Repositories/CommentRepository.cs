@@ -1,6 +1,4 @@
-﻿using CommentPost.Application.Filters;
-using CommentPost.Application.Mappers;
-using CommentPost.Application.Repositories;
+﻿using CommentPost.Application.Repositories;
 using CommentPost.Domain.Entities;
 
 namespace CommentPost.Infrastructure.EntityFramework.Repositories;
@@ -15,24 +13,20 @@ public class CommentRepository : GenericRepository<Comment, int>, ICommentReposi
 	{
 	}
 
-	public async Task<PaginationResult<Comment>> GetAllByPageId(string pageId, Pagination pagination)
+	public async Task<IQueryable<Comment>> GetAllByPageId(string pageId)
 	{
-		IQueryable<Comment> query = Entities
+		return Entities
 			.Where(comment => comment.PageId == pageId);
-
-		return pagination.GetPaged(query);
 	}
 
-	public async Task<PaginationResult<Comment>> GetAllByReplyId(int replyId, Pagination pagination)
+	public async Task<IQueryable<Comment>> GetAllByReplyId(int replyId)
 	{
-		IQueryable<Comment> query = Entities
+		return Entities
 			.Where(comment => comment.ReplyId == replyId);
-
-		return pagination.GetPaged(query);
 	}
 
 
-	public Task<PaginationResult<Comment>> SearchByText(string text, Pagination pagination)
+	public Task<IQueryable<Comment>> SearchByText(string text)
 	{
 		throw new NotImplementedException();
 	}

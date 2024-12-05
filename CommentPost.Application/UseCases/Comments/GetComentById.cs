@@ -1,4 +1,4 @@
-﻿using CommentPost.Application.Repositories;
+﻿using CommentPost.Application.Services;
 using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.UseCases.Comments;
@@ -12,16 +12,16 @@ public class GetComentByIdCommand
 
 public class GetComentByIdHandler
 {
-	readonly ICommentRepository _commentRepository;
+	readonly ICommentService _commentService;
 
-	public GetComentByIdHandler(ICommentRepository commentRepository)
+	public GetComentByIdHandler(ICommentService commentService)
 	{
-		_commentRepository = commentRepository;
+		_commentService = commentService;
 	}
 
 
 	public async Task<Comment?> ExecuteAsync(GetComentByIdCommand command)
 	{
-		return await _commentRepository.GetById(command.CommentId);
+		return await _commentService.GetById(command.CommentId);
 	}
 }
