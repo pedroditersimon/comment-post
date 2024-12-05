@@ -1,4 +1,5 @@
-﻿using CommentPost.Application.Services;
+﻿using CommentPost.Application.Exceptions;
+using CommentPost.Application.Services;
 using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.UseCases.Comments;
@@ -29,7 +30,7 @@ public class PostNewReplyCommentHandler
 
 		// not found
 		if (originalComment == null)
-			throw new Exception("Not found");
+			throw new NotFoundException(nameof(Comment), typeof(Comment));
 
 		// map
 		Comment comment = new()
@@ -48,11 +49,13 @@ public class PostNewReplyCommentHandler
 
 		// create
 		Comment? createdComment = await _commentService.Create(comment);
+		if (createdComment == null)
+			throw new CreateResourceException(nameof(Comment), command);
 
 		// save
 		bool saved = await _unitOfWork.ApplyChangesAsync();
 		if (!saved)
-			throw new Exception("Cannot save");
+			throw new SaveChangesException();
 
 		return createdComment;
 	}

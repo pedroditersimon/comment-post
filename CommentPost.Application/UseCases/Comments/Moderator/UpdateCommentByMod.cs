@@ -1,4 +1,5 @@
-﻿using CommentPost.Application.Mappers;
+﻿using CommentPost.Application.Exceptions;
+using CommentPost.Application.Mappers;
 using CommentPost.Application.Services;
 using CommentPost.Domain.Entities;
 
@@ -33,23 +34,21 @@ public class UpdateCommentByModHandler
 	{
 		// get original
 		Comment? comment = await _commentService.GetById(command.CommentId);
-		if (command == null)
-			throw new Exception("Comment Not found");
+		if (comment == null)
+			throw new NotFoundException(nameof(Comment), typeof(Comment));
 
 		// replace values
-		Comment? replacedComment = comment.ReplaceWith(command, skipNullValues: true);
-		if (replacedComment == null)
-			throw new Exception("Cannot replace the comment values");
+		Comment replacedComment = comment.ReplaceWith(command, skipNullValues: true);
 
 		// update
 		Comment? updatedComment = await _commentService.Update(replacedComment);
 		if (updatedComment == null)
-			throw new Exception("Cannot update the Comment");
+			throw new UpdateResourceException(nameof(Comment), command);
 
 		// save
 		bool saved = await _unitOfWork.ApplyChangesAsync();
 		if (!saved)
-			throw new Exception("Cannot save");
+			throw new SaveChangesException();
 
 		return updatedComment;
 	}

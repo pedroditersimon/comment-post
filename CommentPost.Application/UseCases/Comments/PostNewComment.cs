@@ -1,4 +1,5 @@
-﻿using CommentPost.Application.Services;
+﻿using CommentPost.Application.Exceptions;
+using CommentPost.Application.Services;
 using CommentPost.Domain.Entities;
 
 namespace CommentPost.Application.UseCases.Comments;
@@ -35,11 +36,13 @@ public class PostNewCommentHandler
 
 		// create
 		Comment? createdComment = await _commentService.Create(comment);
+		if (createdComment == null)
+			throw new CreateResourceException(nameof(Comment), command);
 
 		// save
 		bool saved = await _unitOfWork.ApplyChangesAsync();
 		if (!saved)
-			throw new Exception("Cannot save");
+			throw new SaveChangesException();
 
 		return createdComment;
 	}
