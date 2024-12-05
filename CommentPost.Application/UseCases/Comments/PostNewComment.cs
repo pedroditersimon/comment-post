@@ -27,6 +27,9 @@ public class PostNewCommentHandler
 
 	public async Task<Comment?> ExecuteAsync(PostNewCommentCommand command)
 	{
+		if (string.IsNullOrEmpty(command.Text) || string.IsNullOrEmpty(command.PageId))
+			throw new InvalidArgumentException();
+
 		Comment comment = new()
 		{
 			UserId = command.UserId,

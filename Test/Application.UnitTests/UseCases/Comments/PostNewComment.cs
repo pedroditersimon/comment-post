@@ -1,4 +1,5 @@
-﻿using CommentPost.Application.Services;
+﻿using CommentPost.Application.Exceptions;
+using CommentPost.Application.Services;
 using CommentPost.Application.UseCases.Comments;
 using CommentPost.Domain.Entities;
 using NSubstitute;
@@ -73,11 +74,8 @@ public class PostNewComment
 		};
 		PostNewCommentHandler handler = new(_commentService, _unitOfWork);
 
-		// Act
-		Comment? comment = await handler.ExecuteAsync(command);
-
-		// Assert
-		Assert.That(comment, Is.Null);
+		// Act and Assert
+		Assert.ThrowsAsync<InvalidArgumentException>(async () => await handler.ExecuteAsync(command));
 	}
 
 
@@ -94,10 +92,7 @@ public class PostNewComment
 		};
 		PostNewCommentHandler handler = new(_commentService, _unitOfWork);
 
-		// Act
-		Comment? comment = await handler.ExecuteAsync(command);
-
-		// Assert
-		Assert.That(comment, Is.Null);
+		// Act and Assert
+		Assert.ThrowsAsync<InvalidArgumentException>(async () => await handler.ExecuteAsync(command));
 	}
 }

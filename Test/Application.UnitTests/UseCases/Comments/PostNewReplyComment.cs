@@ -136,11 +136,8 @@ public class PostNewReplyComment
 		};
 		PostNewReplyCommentHandler handler = new(_commentService, _unitOfWork);
 
-		// Act
-		Comment? comment = await handler.ExecuteAsync(command);
-
-		// Assert
-		Assert.That(comment, Is.Null);
+		// Act and Assert
+		Assert.ThrowsAsync<InvalidArgumentException>(async () => await handler.ExecuteAsync(command));
 	}
 
 

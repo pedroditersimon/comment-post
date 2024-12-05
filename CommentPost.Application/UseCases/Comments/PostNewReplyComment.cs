@@ -26,6 +26,9 @@ public class PostNewReplyCommentHandler
 
 	public async Task<Comment?> ExecuteAsync(PostNewReplyCommentCommand command)
 	{
+		if (string.IsNullOrEmpty(command.Text))
+			throw new InvalidArgumentException();
+
 		Comment? originalComment = await _commentService.GetById(command.ReplyId);
 
 		// not found
