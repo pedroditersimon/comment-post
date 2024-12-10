@@ -11,9 +11,9 @@ Todo:
 - Hacer tests de paginacion
 - Quitar el async Task y devolver IQueryable en los repositorios
 - Authorization 
-	- Agregar controlador con endpoits de login, logout, register
+	- Agregar controlador con endpoits de login, logout, register en local
 	- Agregar endpoints login con auth0
-	- Servicio para Emitir, decodificar y validar tokens jwt
+	x Servicio para Emitir, decodificar y validar tokens jwt
 	- Servicio para obtener access token de auth0 y la informacion del usuario
 	- Obtener el token jwt de las peticiones por el header authorization Bearer {token}
 		(linea 75) https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
@@ -49,6 +49,3 @@ x Implementar EF en la infraestructura
 ------------------------------
 Make a ef migration: (in the solution root folder)
 dotnet ef migrations add Initial --project CommentPost.Infrastructure --startup-project CommentPost.API -o EntityFramework/Migrations
-
-
-dotnet ef migrations add AddUserAuth --project CommentPost.Infrastructure --startup-project CommentPost.API -o EntityFramework/Migrations
