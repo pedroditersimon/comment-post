@@ -100,7 +100,7 @@ public class JwtService
 	#region Static utils
 	/// <summary>
 	/// Decode a token without verifyng the signature </summary>
-	public static SecurityToken? DecodeToken(string token)
+	public static JwtSecurityToken? DecodeToken(string token)
 	{
 		try
 		{

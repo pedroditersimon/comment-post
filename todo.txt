@@ -14,7 +14,8 @@ Todo:
 	- Agregar controlador con endpoits de login, logout, register en local
 	- Agregar endpoints login con auth0
 	x Servicio para Emitir, decodificar y validar tokens jwt
-	- Servicio para obtener access token de auth0 y la informacion del usuario
+	x Servicio para obtener access token de auth0 y la informacion del usuario
+	- (api) Configurar el servicio Auth0 y Jwt junto con sus setting en appsettings.json
 	- Obtener el token jwt de las peticiones por el header authorization Bearer {token}
 		(linea 75) https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 - (api) Configurar el servicio IHttpClientFactory 
