@@ -3,5 +3,5 @@
 public enum Role
 {
 	User,
-	Mod
+	Moderator
 }
