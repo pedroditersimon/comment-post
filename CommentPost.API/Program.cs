@@ -6,14 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 // set env varaibles to appsetting.json
 builder.Configuration.AddEnvironmentVariables();
 
-// configure services
-
 // load the PostgreDBSettings from appsettings.json
 builder.Services.Configure<PostgreSQLSettings>(builder.Configuration.GetSection("PostgreSQLSettings"));
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+builder.Services.Configure<Auth0Settings>(builder.Configuration.GetSection("Auth0Settings"));
 
+// Add services to the container.
+builder.Services.AddHttpClient();
 builder.Services.AddApplicationDBContext();
 builder.Services.AddInfrastructureServices();
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
