@@ -15,15 +15,6 @@ public class JwtService
 		_settings = settings;
 	}
 
-	public string CreateEncodedToken(string userId, string role)
-	{
-		return CreateEncodedToken(new Dictionary<string, object>()
-			{
-				{"userId", userId },
-				{"role", role }
-			});
-	}
-
 	public string CreateEncodedToken(Dictionary<string, object> claims)
 	{
 		// create key
