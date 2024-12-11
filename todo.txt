@@ -20,6 +20,7 @@ Todo:
 	- Obtener el token jwt de las peticiones por el header authorization Bearer {token}
 		(linea 75) https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 - Agregar query filter de IsDeleted
+- Agregar excepciones a los servicios de auth
 
 Done:
 - Implementar Pagination y PaginationResult<T> en repositorios
