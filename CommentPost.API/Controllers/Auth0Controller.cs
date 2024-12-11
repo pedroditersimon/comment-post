@@ -1,5 +1,6 @@
-﻿using CommentPost.Infrastructure.Models;
-using CommentPost.Infrastructure.Services;
+﻿using CommentPost.API.DTOs.Auth;
+using CommentPost.Infrastructure.Models.Auth;
+using CommentPost.Infrastructure.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommentPost.API.Controllers;
@@ -15,8 +16,8 @@ public class Auth0Controller : ControllerBase
 		_auth0Service = auth0Service;
 	}
 
-	[HttpPost(nameof(Token))]
-	public async Task<ActionResult<Auth0TokenResponse>> Token(string authenticationCode)
+	[HttpGet(nameof(AccessToken))]
+	public async Task<ActionResult<Auth0TokenResponse>> AccessToken(string authenticationCode)
 	{
 		Auth0TokenResponse? tokenResponse = await _auth0Service.GetAccessToken(authenticationCode);
 
@@ -27,7 +28,7 @@ public class Auth0Controller : ControllerBase
 	}
 
 
-	[HttpPost(nameof(GetUserId))]
+	[HttpGet(nameof(GetUserId))]
 	public async Task<ActionResult<string>> GetUserId(string accessToken)
 	{
 		string? userId = _auth0Service.GetUserId(accessToken);
@@ -38,7 +39,7 @@ public class Auth0Controller : ControllerBase
 		return userId;
 	}
 
-	[HttpPost(nameof(GetUserInfo))]
+	[HttpGet(nameof(GetUserInfo))]
 	public async Task<ActionResult<Auth0UserInfo?>> GetUserInfo(string accessToken)
 	{
 		Auth0UserInfo? userInfo = await _auth0Service.GetUserInfo(accessToken);
@@ -47,5 +48,55 @@ public class Auth0Controller : ControllerBase
 			return BadRequest();
 
 		return userInfo;
+	}
+
+
+
+
+
+
+	[HttpPost(nameof(Login))]
+	public async Task<ActionResult<AuthToken>> Login([FromBody] Auth0LoginRequest request)
+	{
+		try
+		{
+			Auth0TokenResponse? tokenResponse = await _auth0Service.GetAccessToken(request.AuthenticationCode);
+			if (tokenResponse == null)
+				throw new Exception("cannot GetAccessToken");
+
+			string? userId = _auth0Service.GetUserId(tokenResponse.AccessToken);
+			if (userId == null)
+				throw new Exception("cannot GetUserId");
+
+			AuthToken token = await _auth0Service.Login(userId);
+			return Ok(token);
+		}
+		catch (Exception)
+		{
+			return Unauthorized();
+		}
+	}
+
+
+	[HttpPost(nameof(Register))]
+	public async Task<ActionResult<AuthToken>> Register([FromBody] Auth0LoginRequest request)
+	{
+		try
+		{
+			Auth0TokenResponse? tokenResponse = await _auth0Service.GetAccessToken(request.AuthenticationCode);
+			if (tokenResponse == null)
+				throw new Exception("cannot GetAccessToken");
+
+			Auth0UserInfo? userInfo = await _auth0Service.GetUserInfo(tokenResponse.AccessToken);
+			if (userInfo == null)
+				throw new Exception("cannot GetUserInfo");
+
+			AuthToken token = await _auth0Service.Register(userInfo);
+			return Ok(token);
+		}
+		catch (Exception ex)
+		{
+			return Unauthorized();
+		}
 	}
 }
