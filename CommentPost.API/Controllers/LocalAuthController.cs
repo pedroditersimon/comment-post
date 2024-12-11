@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CommentPost.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("auth")]
 public class LocalAuthController : ControllerBase
 {
 	readonly IUserService _userService;

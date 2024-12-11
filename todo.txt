@@ -20,9 +20,9 @@ Todo:
 	- Obtener el token jwt de las peticiones por el header authorization Bearer {token}
 		(linea 75) https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 - Agregar query filter de IsDeleted
-- Actualizar campos de normalizacion, como LastLoginAt
 - Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
 - Documentar api en readme
+
 
 
 Done:
@@ -54,7 +54,7 @@ x Implementar EF en la infraestructura
 - (api) Configurar el servicio IHttpClientFactory 
 - Agregar excepciones a los servicios y controladores de auth
 - Agregar metodo para verificar password
-
+- Actualizar campos de normalizacion, como LastLoginAt
 
 
 ------------------------------
