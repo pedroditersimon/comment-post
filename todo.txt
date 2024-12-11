@@ -16,7 +16,7 @@ Todo:
 	x Servicio para Emitir, decodificar y validar tokens jwt
 	x Servicio para obtener access token de auth0 y la informacion del usuario
 	x (api) Configurar el servicio Auth0 y Jwt junto con sus setting en appsettings.json
-	- (infra) Servicio para validar credenciales del usuario, generar un token y validar el token
+	x (infra) Servicio para validar credenciales del usuario, generar y validar un token
 	- Obtener el token jwt de las peticiones por el header authorization Bearer {token}
 		(linea 75) https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 - Agregar query filter de IsDeleted
