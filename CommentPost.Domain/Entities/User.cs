@@ -20,7 +20,7 @@ public class User : BaseEntity<int>
 
 	// User details
 	public string DisplayName { get; set; } = "User";
-	public string LastLoginAt { get; set; }
+	public DateTime LastLoginAt { get; set; }
 	public string? ProfilePhotoUrl { get; set; }
 
 }
