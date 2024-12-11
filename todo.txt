@@ -11,7 +11,7 @@ Todo:
 - Hacer tests de paginacion
 - Quitar el async Task y devolver IQueryable en los repositorios
 - Authorization 
-	- Agregar controlador con endpoits de login, logout, register en local
+	x Agregar controlador con endpoits de login, logout, register en local
 	- Agregar endpoints login con auth0
 	x Servicio para Emitir, decodificar y validar tokens jwt
 	x Servicio para obtener access token de auth0 y la informacion del usuario
