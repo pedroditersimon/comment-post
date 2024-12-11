@@ -20,7 +20,7 @@ public static class ServiceExtensions
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 		// services
-		//services.AddScoped<IUserService>();
+		services.AddScoped<IUserService, UserService>();
 		services.AddScoped<ICommentService, CommentService>();
 
 		services.AddScoped<JwtService>(provider =>
