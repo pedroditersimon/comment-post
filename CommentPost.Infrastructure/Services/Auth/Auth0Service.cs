@@ -129,7 +129,9 @@ public class Auth0Service
 		if (user == null)
 			throw new NotFoundException("El usuario externo no existe.");
 
-		return _authService.CreateAuthToken(user);
+		// login user
+		AuthToken token = await _authService.LoginUser(user);
+		return token;
 	}
 
 	public async Task<AuthToken> Register(Auth0UserInfo userInfo)
@@ -138,10 +140,8 @@ public class Auth0Service
 			throw new InvalidArgumentException();
 
 		// create user
-		User? registeredUser = await _authService.RegisterUser(new User()
+		AuthToken token = await _authService.RegisterUser(new User()
 		{
-			CreationDate = DateTime.UtcNow,
-			LastLoginAt = DateTime.UtcNow,
 			AuthProvider = AuthProviders.Auth0,
 			ExternalId = userInfo.Sub,
 			Role = Role.User,
@@ -150,8 +150,7 @@ public class Auth0Service
 			ProfilePhotoUrl = userInfo.Picture,
 		});
 
-		// return jwt
-		return _authService.CreateAuthToken(registeredUser);
+		return token;
 	}
 	#endregion
 }

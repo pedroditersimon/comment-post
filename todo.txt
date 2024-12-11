@@ -21,6 +21,9 @@ Todo:
 		(linea 75) https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 - Agregar query filter de IsDeleted
 - Actualizar campos de normalizacion, como LastLoginAt
+- Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
+- Documentar api en readme
+- Agregar metodo para verificar password
 
 Done:
 - Implementar Pagination y PaginationResult<T> en repositorios

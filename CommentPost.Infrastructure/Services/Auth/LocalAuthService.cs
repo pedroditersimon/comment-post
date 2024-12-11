@@ -22,21 +22,22 @@ public class LocalAuthService
 	public async Task<AuthToken> Login(string username, string password)
 	{
 		if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-			throw new InvalidArgumentException();
+			throw new InvalidArgumentException("Username and password cannot be empty or whitespace.");
 
 		User? user = await _userService.GetByUsername(username);
 		if (user == null || user.Username == null)
-			throw new NotFoundException("Invalid username");
+			throw new InvalidCredentialsException("Invalid username or password.");
 
 		// create password hash
 		string passwordHash = _authService.HashString(password);
 
 		// validate
 		if (user.PasswordHash != passwordHash)
-			throw new InvalidCredentialsException("Invalid password");
+			throw new InvalidCredentialsException("Invalid username or password.");
 
-		// return jwt
-		return _authService.CreateAuthToken(user);
+		// login user
+		AuthToken token = await _authService.LoginUser(user);
+		return token;
 	}
 
 	public async Task<AuthToken> Register(string username, string password)
@@ -44,19 +45,18 @@ public class LocalAuthService
 		if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
 			throw new InvalidArgumentException();
 
-		User? registeredUser = await _authService.RegisterUser(new User()
+		// register user
+		AuthToken token = await _authService.RegisterUser(new User()
 		{
 			AuthProvider = AuthProviders.Local,
-			CreationDate = DateTime.UtcNow,
-			LastLoginAt = DateTime.UtcNow,
 			Role = Role.User,
 			PasswordHash = _authService.HashString(password),
 			Username = username
 		});
 
-		// return jwt
-		return _authService.CreateAuthToken(registeredUser);
+		return token;
 	}
 
 
+	// verify password
 }

@@ -22,7 +22,23 @@ public class AuthService
 		_unitOfWork = unitOfWork;
 	}
 
-	public async Task<User?> RegisterUser(User user)
+	public async Task<AuthToken> LoginUser(User user)
+	{
+		user.LastLoginAt = DateTime.UtcNow;
+
+		User? updatedUser = await _userService.Update(user);
+		if (updatedUser == null)
+			throw new UpdateResourceException();
+
+		bool saved = await _unitOfWork.ApplyChangesAsync();
+		if (!saved)
+			throw new SaveChangesException();
+
+		// return jwt
+		return CreateAuthToken(updatedUser);
+	}
+
+	public async Task<AuthToken> RegisterUser(User user)
 	{
 		User? existingUser = user.AuthProvider == AuthProviders.Local
 			? await _userService.GetByUsername(user.Username)
@@ -30,6 +46,8 @@ public class AuthService
 
 		if (existingUser != null)
 			throw new ResourceConflictException("The user already exists.");
+
+		user.LastLoginAt = DateTime.UtcNow;
 
 		User? createdUser = await _userService.Create(user);
 		if (createdUser == null)
@@ -39,9 +57,12 @@ public class AuthService
 		if (!saved)
 			throw new SaveChangesException();
 
-		return user.AuthProvider == AuthProviders.Local
-			? await _userService.GetByUsername(user.Username)
-			: await _userService.GetByExternalId(user.ExternalId);
+		User? registeredUser = user.AuthProvider == AuthProviders.Local
+			? await _userService.GetByUsername(createdUser.Username)
+			: await _userService.GetByExternalId(createdUser.ExternalId);
+
+		// return jwt
+		return CreateAuthToken(registeredUser);
 	}
 
 	public AuthToken CreateAuthToken(User user)
