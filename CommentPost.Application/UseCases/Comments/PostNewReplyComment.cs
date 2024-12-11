@@ -24,6 +24,10 @@ public class PostNewReplyCommentHandler
 		_unitOfWork = unitOfWork;
 	}
 
+	/// <exception cref="InvalidArgumentException" />
+	/// <exception cref="NotFoundException" />
+	/// <exception cref="CreateResourceException" />
+	/// <exception cref="SaveChangesException" />
 	public async Task<Comment?> ExecuteAsync(PostNewReplyCommentCommand command)
 	{
 		if (string.IsNullOrEmpty(command.Text))

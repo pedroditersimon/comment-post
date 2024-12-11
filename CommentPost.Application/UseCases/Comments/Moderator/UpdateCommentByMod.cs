@@ -30,6 +30,9 @@ public class UpdateCommentByModHandler
 		_unitOfWork = unitOfWork;
 	}
 
+	/// <exception cref="NotFoundException" />
+	/// <exception cref="UpdateResourceException" />
+	/// <exception cref="SaveChangesException" />
 	public async Task<Comment> ExecuteAsync(UpdateCommentByModCommand command)
 	{
 		// get original

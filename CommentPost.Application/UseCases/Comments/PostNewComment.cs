@@ -24,7 +24,9 @@ public class PostNewCommentHandler
 		_unitOfWork = unitOfWork;
 	}
 
-
+	/// <exception cref="InvalidArgumentException" />
+	/// <exception cref="CreateResourceException" />
+	/// <exception cref="SaveChangesException" />
 	public async Task<Comment?> ExecuteAsync(PostNewCommentCommand command)
 	{
 		if (string.IsNullOrEmpty(command.Text) || string.IsNullOrEmpty(command.PageId))
