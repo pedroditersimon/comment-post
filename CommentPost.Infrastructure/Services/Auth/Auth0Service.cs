@@ -121,19 +121,22 @@ public class Auth0Service
 
 
 	#region Auth/Register
+
 	/// <param name="externalId">
 	/// userId (sub) is used as externalId </param>
+	/// <exception cref="InvalidCredentialsException" />
 	public async Task<AuthToken> Login(string externalId)
 	{
 		User? user = await _userService.GetByExternalId(externalId);
 		if (user == null)
-			throw new NotFoundException("El usuario externo no existe.");
+			throw new InvalidCredentialsException("Invalid username or password.");
 
 		// login user
 		AuthToken token = await _authService.LoginUser(user);
 		return token;
 	}
 
+	/// <exception cref="InvalidArgumentException" />
 	public async Task<AuthToken> Register(Auth0UserInfo userInfo)
 	{
 		if (string.IsNullOrEmpty(userInfo.Sub))

@@ -23,7 +23,7 @@ Todo:
 - Actualizar campos de normalizacion, como LastLoginAt
 - Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
 - Documentar api en readme
-- Agregar metodo para verificar password
+
 
 Done:
 - Implementar Pagination y PaginationResult<T> en repositorios
@@ -53,6 +53,9 @@ x Implementar EF en la infraestructura
 - Hacer tests de casos de uso
 - (api) Configurar el servicio IHttpClientFactory 
 - Agregar excepciones a los servicios y controladores de auth
+- Agregar metodo para verificar password
+
+
 
 ------------------------------
 Make a ef migration: (in the solution root folder)

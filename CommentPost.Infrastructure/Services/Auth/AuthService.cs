@@ -22,6 +22,8 @@ public class AuthService
 		_unitOfWork = unitOfWork;
 	}
 
+	/// <exception cref="UpdateResourceException" />
+	/// <exception cref="SaveChangesException" />
 	public async Task<AuthToken> LoginUser(User user)
 	{
 		user.LastLoginAt = DateTime.UtcNow;
@@ -38,6 +40,9 @@ public class AuthService
 		return CreateAuthToken(updatedUser);
 	}
 
+	/// <exception cref="ResourceConflictException" />
+	/// <exception cref="CreateResourceException" />
+	/// <exception cref="SaveChangesException" />
 	public async Task<AuthToken> RegisterUser(User user)
 	{
 		User? existingUser = user.AuthProvider == AuthProviders.Local
