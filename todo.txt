@@ -20,7 +20,7 @@ Todo:
 	- Obtener el token jwt de las peticiones por el header authorization Bearer {token}
 		(linea 75) https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 - Agregar query filter de IsDeleted
-- Agregar excepciones a los servicios de auth
+- Actualizar campos de normalizacion, como LastLoginAt
 
 Done:
 - Implementar Pagination y PaginationResult<T> en repositorios
@@ -49,7 +49,7 @@ x Implementar EF en la infraestructura
 - Manejar las excepciones en el controlador y devolver su respectivo codigo HTTP (404,409)
 - Hacer tests de casos de uso
 - (api) Configurar el servicio IHttpClientFactory 
-
+- Agregar excepciones a los servicios y controladores de auth
 
 ------------------------------
 Make a ef migration: (in the solution root folder)

@@ -1,4 +1,5 @@
 ﻿using CommentPost.API.DTOs.Auth;
+using CommentPost.Application.Exceptions;
 using CommentPost.Infrastructure.Models.Auth;
 using CommentPost.Infrastructure.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
@@ -58,22 +59,38 @@ public class Auth0Controller : ControllerBase
 	[HttpPost(nameof(Login))]
 	public async Task<ActionResult<AuthToken>> Login([FromBody] Auth0LoginRequest request)
 	{
+		if (string.IsNullOrWhiteSpace(request?.AuthenticationCode))
+			return BadRequest("Authentication code is required.");
+
 		try
 		{
 			Auth0TokenResponse? tokenResponse = await _auth0Service.GetAccessToken(request.AuthenticationCode);
 			if (tokenResponse == null)
-				throw new Exception("cannot GetAccessToken");
+				return Unauthorized("Invalid authentication code.");
 
 			string? userId = _auth0Service.GetUserId(tokenResponse.AccessToken);
 			if (userId == null)
-				throw new Exception("cannot GetUserId");
+				return StatusCode(StatusCodes.Status500InternalServerError, "Failed to extract user ID.");
 
 			AuthToken token = await _auth0Service.Login(userId);
 			return Ok(token);
 		}
-		catch (Exception)
+		catch (Exception ex) when (ex is InvalidArgumentException
+								|| ex is ResourceConflictException)
 		{
-			return Unauthorized();
+			return BadRequest(ex.Message);
+		}
+		catch (NotFoundException ex)
+		{
+			return NotFound(ex.Message);
+		}
+		catch (InvalidCredentialsException ex)
+		{
+			return Unauthorized(ex.Message);
+		}
+		catch (Exception ex)
+		{
+			return StatusCode(StatusCodes.Status500InternalServerError, $"An unexpected error occurred: {ex.Message}");
 		}
 	}
 
@@ -81,22 +98,30 @@ public class Auth0Controller : ControllerBase
 	[HttpPost(nameof(Register))]
 	public async Task<ActionResult<AuthToken>> Register([FromBody] Auth0LoginRequest request)
 	{
+		if (string.IsNullOrWhiteSpace(request?.AuthenticationCode))
+			return BadRequest("Authentication code is required.");
+
 		try
 		{
 			Auth0TokenResponse? tokenResponse = await _auth0Service.GetAccessToken(request.AuthenticationCode);
 			if (tokenResponse == null)
-				throw new Exception("cannot GetAccessToken");
+				return Unauthorized("Invalid authentication code.");
 
 			Auth0UserInfo? userInfo = await _auth0Service.GetUserInfo(tokenResponse.AccessToken);
 			if (userInfo == null)
-				throw new Exception("cannot GetUserInfo");
+				return StatusCode(StatusCodes.Status500InternalServerError, "Failed to extract user ID.");
 
 			AuthToken token = await _auth0Service.Register(userInfo);
 			return Ok(token);
 		}
+		catch (Exception ex) when (ex is InvalidArgumentException
+								|| ex is ResourceConflictException)
+		{
+			return BadRequest(ex.Message);
+		}
 		catch (Exception ex)
 		{
-			return Unauthorized();
+			return StatusCode(StatusCodes.Status500InternalServerError, $"An unexpected error occurred: {ex.Message}");
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using CommentPost.API.DTOs.Auth;
+using CommentPost.Application.Exceptions;
 using CommentPost.Application.Services;
 using CommentPost.Infrastructure.Models.Auth;
 using CommentPost.Infrastructure.Services.Auth;
@@ -24,14 +25,31 @@ public class LocalAuthController : ControllerBase
 	[HttpPost(nameof(Login))]
 	public async Task<ActionResult<AuthToken>> Login([FromBody] LocalLoginRequest loginRequest)
 	{
+		if (string.IsNullOrWhiteSpace(loginRequest?.Username)
+			|| string.IsNullOrWhiteSpace(loginRequest?.Password))
+			return BadRequest("Username and password is required.");
+
 		try
 		{
 			AuthToken token = await _localAuthService.Login(loginRequest.Username, loginRequest.Password);
 			return Ok(token);
 		}
-		catch (Exception)
+		catch (Exception ex) when (ex is InvalidArgumentException
+								|| ex is ResourceConflictException)
 		{
-			return Unauthorized();
+			return BadRequest(ex.Message);
+		}
+		catch (NotFoundException ex)
+		{
+			return NotFound(ex.Message);
+		}
+		catch (InvalidCredentialsException ex)
+		{
+			return Unauthorized(ex.Message);
+		}
+		catch (Exception ex)
+		{
+			return StatusCode(StatusCodes.Status500InternalServerError, $"An unexpected error occurred: {ex.Message}");
 		}
 	}
 
@@ -39,17 +57,23 @@ public class LocalAuthController : ControllerBase
 	[HttpPost(nameof(Register))]
 	public async Task<ActionResult<AuthToken>> Register([FromBody] LocalLoginRequest loginRequest)
 	{
+		if (string.IsNullOrWhiteSpace(loginRequest?.Username)
+			|| string.IsNullOrWhiteSpace(loginRequest?.Password))
+			return BadRequest("Username and password is required.");
+
 		try
 		{
 			AuthToken token = await _localAuthService.Register(loginRequest.Username, loginRequest.Password);
 			return Ok(token);
 		}
+		catch (Exception ex) when (ex is InvalidArgumentException
+								|| ex is ResourceConflictException)
+		{
+			return BadRequest(ex.Message);
+		}
 		catch (Exception ex)
 		{
-			return Unauthorized(new AuthToken()
-			{
-				Token = ex.Message
-			});
+			return StatusCode(StatusCodes.Status500InternalServerError, $"An unexpected error occurred: {ex.Message}");
 		}
 	}
 }
