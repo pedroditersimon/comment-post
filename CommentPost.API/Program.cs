@@ -1,4 +1,5 @@
 using CommentPost.API.Extensions;
+using CommentPost.API.Middlewares;
 using CommentPost.Infrastructure.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<AuthenticationMiddleware>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,7 +39,7 @@ app.MigrateDbContext();
 app.UseRouting();
 app.MapControllers();
 
-app.UseHttpsRedirection();
-app.UseAuthorization();
+//app.UseHttpsRedirection();
+app.UseMiddleware<AuthenticationMiddleware>();
 
 app.Run();

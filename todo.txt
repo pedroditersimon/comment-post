@@ -10,15 +10,6 @@ Todo:
 - Hacer tests de mappers
 - Hacer tests de paginacion
 - Quitar el async Task y devolver IQueryable en los repositorios
-- Auth:
-	x Agregar controlador con endpoits de login, logout, register en local
-	x Agregar endpoints login con auth0
-	x Servicio para Emitir, decodificar y validar tokens jwt
-	x Servicio para obtener access token de auth0 y la informacion del usuario
-	x (api) Configurar el servicio Auth0 y Jwt junto con sus setting en appsettings.json
-	x (infra) Servicio para validar credenciales del usuario, generar y validar un token
-	x Obtener el token jwt de las peticiones por el header authorization Bearer {token}
-	- Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
 - Agregar query filter de IsDeleted
 - Documentar api en readme
 - Usar DTOs en la api y dejar de usar los comandos de los casos de uso
@@ -57,7 +48,15 @@ x Implementar EF en la infraestructura
 - Agregar excepciones a los servicios y controladores de auth
 - Agregar metodo para verificar password
 - Actualizar campos de normalizacion, como LastLoginAt
-
+- Auth:
+	x Agregar controlador con endpoits de login, logout, register en local
+	x Agregar endpoints login con auth0
+	x Servicio para Emitir, decodificar y validar tokens jwt
+	x Servicio para obtener access token de auth0 y la informacion del usuario
+	x (api) Configurar el servicio Auth0 y Jwt junto con sus setting en appsettings.json
+	x (infra) Servicio para validar credenciales del usuario, generar y validar un token
+	x Obtener el token jwt de las peticiones por el header authorization Bearer {token}
+	x Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
 
 ------------------------------
 Make a ef migration: (in the solution root folder)
