@@ -1,5 +1,7 @@
-﻿using CommentPost.API.DTOs.Auth;
+﻿using CommentPost.API.Attributes;
+using CommentPost.API.DTOs.Auth;
 using CommentPost.Application.Exceptions;
+using CommentPost.Domain.Enums;
 using CommentPost.Infrastructure.Models.Auth;
 using CommentPost.Infrastructure.Services.Auth;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +20,7 @@ public class Auth0Controller : ControllerBase
 	}
 
 	[HttpGet(nameof(AccessToken))]
+	[NeedAuthorization(Role.Moderator)]
 	public async Task<ActionResult<Auth0TokenResponse>> AccessToken(string authenticationCode)
 	{
 		Auth0TokenResponse? tokenResponse = await _auth0Service.GetAccessToken(authenticationCode);
@@ -30,6 +33,7 @@ public class Auth0Controller : ControllerBase
 
 
 	[HttpGet(nameof(GetUserId))]
+	[NeedAuthorization(Role.Moderator)]
 	public async Task<ActionResult<string>> GetUserId(string accessToken)
 	{
 		string? userId = _auth0Service.GetUserId(accessToken);
@@ -41,6 +45,7 @@ public class Auth0Controller : ControllerBase
 	}
 
 	[HttpGet(nameof(GetUserInfo))]
+	[NeedAuthorization(Role.Moderator)]
 	public async Task<ActionResult<Auth0UserInfo?>> GetUserInfo(string accessToken)
 	{
 		Auth0UserInfo? userInfo = await _auth0Service.GetUserInfo(accessToken);
