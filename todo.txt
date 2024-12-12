@@ -17,9 +17,9 @@ Todo:
 	x Servicio para obtener access token de auth0 y la informacion del usuario
 	x (api) Configurar el servicio Auth0 y Jwt junto con sus setting en appsettings.json
 	x (infra) Servicio para validar credenciales del usuario, generar y validar un token
-	- Obtener el token jwt de las peticiones por el header authorization Bearer {token}
+	x Obtener el token jwt de las peticiones por el header authorization Bearer {token}
+	- Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
 - Agregar query filter de IsDeleted
-- Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
 - Documentar api en readme
 - Usar DTOs en la api y dejar de usar los comandos de los casos de uso
 - Usar el userId del token de la request para los comandos de los casos de uso
