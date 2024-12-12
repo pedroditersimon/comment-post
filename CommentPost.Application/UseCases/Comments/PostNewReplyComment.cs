@@ -33,6 +33,8 @@ public class PostNewReplyCommentHandler
 		if (string.IsNullOrEmpty(command.Text))
 			throw new InvalidArgumentException();
 
+		// TODO: verify that userId exists
+
 		Comment? originalComment = await _commentService.GetById(command.ReplyId);
 
 		// not found

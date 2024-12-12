@@ -32,6 +32,8 @@ public class PostNewCommentHandler
 		if (string.IsNullOrEmpty(command.Text) || string.IsNullOrEmpty(command.PageId))
 			throw new InvalidArgumentException();
 
+		// TODO: verify that userId exists
+
 		Comment comment = new()
 		{
 			UserId = command.UserId,

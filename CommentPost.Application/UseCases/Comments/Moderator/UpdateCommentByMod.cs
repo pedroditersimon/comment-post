@@ -40,6 +40,8 @@ public class UpdateCommentByModHandler
 		if (comment == null)
 			throw new NotFoundException(nameof(Comment), typeof(Comment));
 
+		// TODO: verify that userId and ReplyId exists
+
 		// replace values
 		Comment replacedComment = comment.ReplaceWith(command, skipNullValues: true);
 
