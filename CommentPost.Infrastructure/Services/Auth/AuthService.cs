@@ -90,10 +90,14 @@ public class AuthService
 
 		JwtPayload payload = jwtSecurityToken.Payload;
 
+		// parse
+		int userId = int.TryParse(payload["userId"]?.ToString(), out var parsedUserId) ? parsedUserId : 0;
+		Role role = Enum.TryParse(payload["role"]?.ToString(), out Role parsedRole) ? parsedRole : Role.User;
+
 		var decodedToken = new DecodedAuthToken
 		{
-			UserId = payload["userId"]?.ToString() ?? string.Empty,
-			Role = Enum.TryParse<Role>(payload["role"]?.ToString(), out var role) ? role : Role.User
+			UserId = userId,
+			Role = role
 		};
 
 		return decodedToken;

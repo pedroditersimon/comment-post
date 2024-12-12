@@ -22,6 +22,7 @@ Todo:
 - Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
 - Documentar api en readme
 - Usar DTOs en la api y dejar de usar los comandos de los casos de uso
+- Usar el userId del token de la request para los comandos de los casos de uso
 - Manejar los errores en los repositorios, (DbUpdateException)
 
 

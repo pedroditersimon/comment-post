@@ -80,6 +80,15 @@ public class JwtService
 
 			return null;
 		}
+
+		catch (SecurityTokenInvalidSignatureException)
+		{
+			return null;
+		}
+		catch (SecurityTokenExpiredException)
+		{
+			return null;
+		}
 		catch (Exception)
 		{
 			return null;
