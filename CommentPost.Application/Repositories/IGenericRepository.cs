@@ -7,6 +7,7 @@ public interface IGenericRepository<T, Tid>
 {
 	// Get
 	public Task<T?> GetById(Tid id);
+	// Even if an <Iqueryable> is returned, <Task> is maintained by abstraction
 	public Task<IQueryable<T>> GetAll();
 
 	// Create
