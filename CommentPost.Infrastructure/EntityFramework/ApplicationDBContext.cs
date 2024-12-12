@@ -21,6 +21,7 @@ public class ApplicationDBContext : DbContext
 		//modelBuilder.ApplyConfiguration(new TodoTaskSeed());
 
 		// dont include Soft deleted entities in any queries
+		modelBuilder.Entity<User>().HasQueryFilter(c => !c.IsDeleted);
 		modelBuilder.Entity<Comment>().HasQueryFilter(c => !c.IsDeleted);
 	}
 }
