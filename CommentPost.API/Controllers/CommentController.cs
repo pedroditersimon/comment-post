@@ -49,13 +49,10 @@ public class CommentController : ControllerBase
 		{
 			comment = await handler.ExecuteAsync(command);
 		}
-		catch (CreateResourceException)
+		catch (Exception ex) when (ex is CreateResourceException
+								|| ex is SaveChangesException)
 		{
 			return StatusCode(500); // Internal Server Error
-		}
-		catch (SaveChangesException)
-		{
-			return StatusCode(503); // Service Unavailable
 		}
 
 		if (comment == null)
@@ -81,13 +78,10 @@ public class CommentController : ControllerBase
 		{
 			return NotFound();
 		}
-		catch (CreateResourceException)
+		catch (Exception ex) when (ex is CreateResourceException
+								|| ex is SaveChangesException)
 		{
 			return StatusCode(500); // Internal Server Error
-		}
-		catch (SaveChangesException)
-		{
-			return StatusCode(503); // Service Unavailable
 		}
 
 		if (comment == null)
@@ -178,13 +172,10 @@ public class CommentController : ControllerBase
 		{
 			return NotFound();
 		}
-		catch (UpdateResourceException)
+		catch (Exception ex) when (ex is UpdateResourceException
+								|| ex is SaveChangesException)
 		{
 			return StatusCode(500); // Internal Server Error
-		}
-		catch (SaveChangesException)
-		{
-			return StatusCode(503); // Service Unavailable
 		}
 
 		if (comment == null)

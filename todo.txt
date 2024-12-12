@@ -1,11 +1,9 @@
 
 Todo:
 - Agregar servicio para chekear lenguaje inapropiado
-- (api) Hacer controlador de User
 - Utilizar otra base de datos como MySQL, ver SQL Server.
-- Proteger las rutas de moderador
 - Verificar que el usuario userID existe antes de crear/editar un comentario y meterlo en la bbdd
-- Agregar concurrency check
+
 - Hacer tests de servicios
 - Hacer tests de mappers
 - Hacer tests de paginacion
@@ -14,8 +12,10 @@ Todo:
 - Documentar api en readme
 - (api) Usar DTOs en la api, enves de los comandos de los casos de uso
 - Usar el userId del token de la request para los comandos de los casos de uso
-- Manejar el error DbUpdateException en los repositorios (clave foranea invalida)
-
+Admin:
+	- Agregar rol de admin
+	- Agregar funcionalidades para manejar las cuentas de los usuarios
+	- (api) Hacer controlador de User
 
 
 Done:
@@ -57,6 +57,8 @@ x Implementar EF en la infraestructura
 	x (infra) Servicio para validar credenciales del usuario, generar y validar un token
 	x Obtener el token jwt de las peticiones por el header authorization Bearer {token}
 	x Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
+- Agregar concurrency check
+- Manejar el error DbUpdateException en los repositorios (clave foranea invalida)
 
 ------------------------------
 Make a ef migration: (in the solution root folder)

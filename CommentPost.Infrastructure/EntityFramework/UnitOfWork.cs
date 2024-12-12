@@ -1,5 +1,6 @@
 ﻿using CommentPost.Application.Repositories;
 using CommentPost.Application.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace CommentPost.Infrastructure.EntityFramework;
 
@@ -29,6 +30,19 @@ public class UnitOfWork : IUnitOfWork
 
 	public async Task<bool> ApplyChangesAsync()
 	{
-		return await _dbContext.SaveChangesAsync() > 0;
+		try
+		{
+			return await _dbContext.SaveChangesAsync() > 0;
+		}
+		catch (DbUpdateConcurrencyException)
+		{
+			Console.WriteLine("DbUpdateConcurrencyException");
+			return false;
+		}
+		catch (DbUpdateException)
+		{
+			Console.WriteLine("DbUpdateException");
+			return false;
+		}
 	}
 }
