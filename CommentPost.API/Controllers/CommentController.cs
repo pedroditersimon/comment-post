@@ -1,4 +1,5 @@
 ﻿using CommentPost.API.Attributes;
+using CommentPost.API.DTOs.Comment;
 using CommentPost.API.Extensions;
 using CommentPost.Application.DTOs.Comment;
 using CommentPost.Application.Exceptions;
@@ -33,12 +34,18 @@ public class CommentController : ControllerBase
 
 	[HttpPost]
 	[NeedAuthorization]
-	public async Task<ActionResult<CommentResponse?>> Post([FromBody] PostNewCommentCommand command)
+	public async Task<ActionResult<CommentResponse?>> Post([FromBody] PostNewCommentRequest request)
 	{
 		if (!HttpContext.TryGetDecodedAuthToken(out DecodedAuthToken decodedToken))
 			return Unauthorized();
 
-		command.UserId = decodedToken.UserId;
+		// map request to command
+		PostNewCommentCommand command = new()
+		{
+			UserId = decodedToken.UserId,
+			PageId = request.PageId,
+			Text = request.Text
+		};
 
 		PostNewCommentHandler handler = new(_commentService, _unitOfWork);
 
@@ -63,8 +70,18 @@ public class CommentController : ControllerBase
 
 	[HttpPost("reply")]
 	[NeedAuthorization]
-	public async Task<ActionResult<CommentResponse?>> PostReply([FromBody] PostNewReplyCommentCommand command)
+	public async Task<ActionResult<CommentResponse?>> PostReply([FromBody] PostNewReplyCommentRequest request)
 	{
+		if (!HttpContext.TryGetDecodedAuthToken(out DecodedAuthToken decodedToken))
+			return Unauthorized();
+
+		// map request to command
+		PostNewReplyCommentCommand command = new()
+		{
+			UserId = decodedToken.UserId,
+			ReplyId = request.ReplyId,
+			Text = request.Text
+		};
 		PostNewReplyCommentHandler handler = new(_commentService, _unitOfWork);
 
 		Comment? comment;
@@ -157,8 +174,10 @@ public class CommentController : ControllerBase
 
 	[HttpPatch]
 	[NeedAuthorization(Role.Moderator)]
-	public async Task<ActionResult<CommentResponse?>> Patch([FromBody] UpdateCommentByModCommand command)
+	public async Task<ActionResult<CommentResponse?>> Patch([FromBody] UpdateCommentByModRequest request)
 	{
+		// map request to command
+		UpdateCommentByModCommand command = new UpdateCommentByModCommand().ReplaceWith(request);
 		UpdateCommentByModHandler handler = new(_commentService, _unitOfWork);
 
 		Comment? comment;

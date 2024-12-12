@@ -3,19 +3,18 @@ Todo:
 - Agregar servicio para chekear lenguaje inapropiado
 - Utilizar otra base de datos como MySQL, ver SQL Server.
 - Verificar que el usuario userID existe antes de crear/editar un comentario y meterlo en la bbdd
-
 - Hacer tests de servicios
 - Hacer tests de mappers
 - Hacer tests de paginacion
 - Quitar el async Task y devolver IQueryable en los repositorios
 - Agregar query filter de IsDeleted
 - Documentar api en readme
-- (api) Usar DTOs en la api, enves de los comandos de los casos de uso
-- Usar el userId del token de la request para los comandos de los casos de uso
 Admin:
 	- Agregar rol de admin
 	- Agregar funcionalidades para manejar las cuentas de los usuarios
 	- (api) Hacer controlador de User
+- El patch replaceWith no borra valores con null, sino que las ignora, buscar manera de realmente poner null
+
 
 
 Done:
@@ -59,6 +58,10 @@ x Implementar EF en la infraestructura
 	x Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
 - Agregar concurrency check
 - Manejar el error DbUpdateException en los repositorios (clave foranea invalida)
+- (api) Usar DTOs en la api, enves de los comandos de los casos de uso
+- Usar el userId del token de la request para los comandos de los casos de uso
+
+
 
 ------------------------------
 Make a ef migration: (in the solution root folder)

@@ -7,7 +7,7 @@ namespace CommentPost.Application.UseCases.Comments.Moderator;
 
 // Editar un comentario: Un moderador edita un comentario.
 
-public class UpdateCommentByModCommand
+public class UpdateCommentByModCommand : ICloneable
 {
 	public int CommentId { get; set; }
 
@@ -15,8 +15,10 @@ public class UpdateCommentByModCommand
 	public int? UserId { get; set; }
 	public string? PageId { get; set; }
 	public string? Text { get; set; }
-	public bool? Visibility { get; set; } = true;
+	public bool? Visibility { get; set; }
 	public int? ReplyId { get; set; }
+
+	public object Clone() => this.MemberwiseClone();
 }
 
 public class UpdateCommentByModHandler
