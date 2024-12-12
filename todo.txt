@@ -10,7 +10,7 @@ Todo:
 - Hacer tests de mappers
 - Hacer tests de paginacion
 - Quitar el async Task y devolver IQueryable en los repositorios
-- Authorization 
+- Auth:
 	x Agregar controlador con endpoits de login, logout, register en local
 	x Agregar endpoints login con auth0
 	x Servicio para Emitir, decodificar y validar tokens jwt
@@ -18,10 +18,11 @@ Todo:
 	x (api) Configurar el servicio Auth0 y Jwt junto con sus setting en appsettings.json
 	x (infra) Servicio para validar credenciales del usuario, generar y validar un token
 	- Obtener el token jwt de las peticiones por el header authorization Bearer {token}
-		(linea 75) https://github.com/iayti/CleanArchitecture/blob/master/src/Apps/CleanArchitecture.Api/Startup.cs
 - Agregar query filter de IsDeleted
 - Middleware para auntenticar, ver posibilidad de agregar un atributo a los endpoints
 - Documentar api en readme
+- Usar DTOs en la api y dejar de usar los comandos de los casos de uso
+- Manejar los errores en los repositorios, (DbUpdateException)
 
 
 
