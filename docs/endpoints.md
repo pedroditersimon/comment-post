@@ -1,9 +1,94 @@
 # Endpoints
 
-Guia de todos los endpoints disponibles.
+Esta guía detalla los endpoints disponibles, su propósito y ejemplos de uso. Estructurada de manera sencilla para facilitar la comprensión y rápida referencia.
 
-## Comentarios
-Respuesta 'comentario'
+
+## Autenticación
+El servidor devuelve un JWT (JSON Web Token) con el ID interno del usuario y su rol. En cada petición, debes enviar este token en el Header 'Authorization', y el servidor lo verificará.
+
+Incluir el token en el header de la siguiente manera:
+```HTTP
+Authorization: 'Bearer <tu_token>'
+```
+
+A continuación, se describen los métodos para autenticarse y obtener el token.
+
+
+### Metodo 1: Local
+Este método permite a los usuarios autenticarse utilizando su nombre de usuario y contraseña locales.
+
+---
+### Login
+
+#### Ruta 
+```HTPP
+POST /login
+```
+
+#### Body - Cuerpo de la Solicitud
+```JSON
+{
+    "Username": "<username>",
+    "Password": "<password>"
+}
+```
+
+
+---
+### Register
+
+#### Ruta 
+```HTPP
+POST /register
+```
+
+#### Body - Cuerpo de la Solicitud
+```JSON
+{
+    "Username": "<username>",
+    "Password": "<password>"
+}
+```
+
+
+### Metodo 2: Auth0
+
+---
+### Login
+
+#### Ruta 
+```HTPP
+POST /auth0/login  
+```
+
+#### Body - Cuerpo de la Solicitud
+```JSON
+{
+    "AuthenticationCode": "<code>",
+}
+```
+
+`AuthenticationCode`: El código de autenticación que se obtiene después de que el usuario inicie sesión en Auth0 y el sistema devuelva un código en el callback de autenticación.
+
+
+---
+### Respuestas
+Todas las respuestas de los métodos de autenticación devuelven un token JWT, que se debe incluir en el header de las solicitudes para acceder a los recursos protegidos.
+
+Ejemplo de respuesta
+```JSON
+{
+    "Token": "<tu_token>"
+}
+```
+`Token`: Este es el token que necesitas incluir en el header de tus peticiones para autenticarte.
+
+
+# Endpoints: Comentarios
+
+### Respuesta típica de un comentario
+Ejemplo de una respuesta típica de un comentario
+
 ```JSON
 {
   "ID": 0,
@@ -17,27 +102,104 @@ Respuesta 'comentario'
 }
 ```
 
+#### Campos
+- `ID`: El identificador único del comentario.
+- `CreationDate`: Fecha y hora de creación del comentario.
+- `LastUpdatedDate`: Fecha de la última actualización del comentario (si aplica).
+- `UserId`: El identificador del usuario que publicó el comentario.
+- `PageId`: El identificador de la página donde se publicó el comentario.
+- `Text`: El texto del comentario.
+- `Visibility`: Indica si el comentario es visible.
+- `ReplyId`: Si el comentario es una respuesta a otro comentario, este campo tendrá el ID del comentario original. Si no es una respuesta, será null.
+
+> [!Note]  
+> El id de la pagina (PageId) es un simple identificador unico para agrupar comentarios.
+No existe ni se almacena una entidad 'pagina'.
+
+
 ---
-### Postear un comentario
+### Respuesta típica de comentarios con paginacion
+
+Cuando se solicita una lista de comentarios, la respuesta esta paginada. Donde se incluyen detalles sobre la cantidad de elementos, el desplazamiento y el límite de comentarios devueltos.
+
+Ejemplo de una respuesta típica de comentarios con paginacion
+
+```JSON
+{
+  "Elements": [
+    {
+      "ID": 1,
+      "CreationDate": "2024-12-13T10:00:00",
+      "LastUpdatedDate": "2024-12-13T10:00:00",
+      "UserId": 456,
+      "PageId": "home-page",
+      "Text": "Comentario de ejemplo 1.",
+      "Visibility": true,
+      "ReplyId": null
+    },
+    // Otros comentarios...
+  ],
+  "Count": 5,
+  "Offset": 0,
+  "Limit": 10 // limite 0 es no limite
+}
+```
+
+#### Campos
+- `Elements`: Es un array que contiene los comentarios obtenidos en la página actual. Cada elemento en el arreglo es un objeto JSON que representa un comentario.
+- `Count`: El número total de elementos.
+- `Offset`: Desplazamiento - Número de comentarios omitidos.
+- `Limit`: El número máximo de comentarios devueltos en la solicitud. Si el valor es 0, significa que no hay límite.
+
+
+---
+### 1. Postear un comentario
+
+Rol minimo requerido: `User` (Usuario).
+
+#### Ruta y Headers
 ```HTPP
 POST /comments
 Authorization: 'Bearer <tu_token>'
 ```
+
+#### Body - Cuerpo de la Solicitud
+- `PageId`: Identificador único de la página donde se publicará el comentario.
+- `Text`: Contenido del comentario.
+
+Ejemplo de cuerpo (Body) en formato JSON:
 ```JSON
 {
     "PageId": "string",
     "Text": "string"
 }
 ```
-Respuesta: comentario
+
+#### Respuesta
+> Respuesta típica de un comentario
+
 
 ---
-### Editar un comentario
-Se requiere rol Moderador para hacer esta peticion.
+### 2. Editar un comentario
+
+Rol minimo requerido: `Moderator` (Moderador).
+> [!Important]  
+> Requiere el rol de Moderador para realizar esta operación.
+
+#### Ruta y Headers
 ```HTPP
-PATCH /comments  
+PATCH /comments
 Authorization: 'Bearer <tu_token>'
 ```
+
+#### Body - Cuerpo de la Solicitud
+- `CommentId`: Identificador del comentario que se desea editar.
+- `Campos opcionales`: Incluye solo los campos que deseas actualizar. 
+
+> [!NOTE]  
+> Los campos enviados con null serán ignorados durante la actualización.  
+
+Ejemplo de cuerpo (Body) en formato JSON:
 ```JSON
 {
 	"CommentId": 1,
@@ -46,96 +208,100 @@ Authorization: 'Bearer <tu_token>'
 	"UserId": 1,
 	"PageId": "my-wow-page",
 	"Text": "comment text",
-	"Visibility": true,
+	"Visibility": null, // Ignorado si se deja en null
 	"ReplyId": 1,
 }
 ```
-Cada campo incluido en el cuerpo de la solicitud será lo que se va modificar en el comentario. Incluir unicamente los campos que quieres actualizar.  
-Tambien puedes dejar un valor 'null' y seran ignorados.
 
-Respuesta: comentario
+#### Respuesta
+> Respuesta típica de un comentario
+
 
 ---
-### Responder a un comentario
+### 3. Responder a un comentario
+
+Rol minimo requerido: `User` (Usuario).
+
+#### Ruta y Headers
 ```HTPP
 POST /comments/reply  
 Authorization: 'Bearer <tu_token>'
 ```
+
+#### Body - Cuerpo de la Solicitud
+- `Text`: Identificador del comentario que se desea editar.
+- `ReplyId`: ID del comentario que se quiere a responder. 
+
+Ejemplo de cuerpo (Body) en formato JSON:
 ```JSON
 {
 	"Text": "comment text",
 	"ReplyId": 1
 }
 ```
-El ReplyId es el id del comentario que se quiere a responder.
+
+#### Respuesta
+> Respuesta típica de un comentario
+
 
 ---
+### 4. Obtener detalles de un comentario
 
-GET   /comments/{comment-id}  
+Rol minimo requerido: `Ninguno`.
+> [!NOTE]  
+> Este endpoint no requiere autenticación.
 
-GET   /comments/page/{page-id}?limit={limit}&offset={offset}
-
-GET   /comments/replies/{comment-id}?limit={limit}&offset={offset}
-
-## PageId
-El id de la pagina (PageId) es un simple identificador para agrupar comentarios.
-No existe ni se almacena una entidad 'pagina'.
-
-## Autenticación
-El servidor devuelve un jwt con el id interno del usuario y su rol. En cada petición se debe enviar este token y el servidor lo va a verificar.  
-Incluir el token en el Header 'Authorization' con el siguiente formato:
-```HTTP
-Authorization: 'Bearer <tu_token>'
-```
-
-### Metodos
-A continuacion, los metodos para autenticarse y obtener el token.
-
-### Metodo 1: Local
----
-### Login
+#### Ruta y Headers
 ```HTPP
-POST /login
-```
-```JSON
-{
-    "Username": "<username>",
-    "Password": "<password>"
-}
+GET /comments/{comment-id}  
 ```
 
-### Register
-```HTPP
-POST /register
-```
-```JSON
-{
-    "Username": "<username>",
-    "Password": "<password>"
-}
-```
+#### Parametros de la solicutd
+- `comment-id`: Identificador del comentario que se desea obtener.
 
-### Metodo 2: Auth0
----
-### Login
-```HTPP
-POST /auth0/login  
-```
-```JSON
-{
-    "AuthenticationCode": "<code>",
-}
-```
 
-'authenticationCode' se extrae luego de que el usuario inicie sesion en Auth0 y devuelva un codigo en el callback.
+#### Respuesta
+> Respuesta típica de un comentario
+
 
 ---
+### 5. Obtener detalles de un comentario
 
-### Respuestas
-Todas las respuestas de cualquiera de los metodos de autenticacion, devuelven un token.
-```JSON
-{
-    "Token": "<tu_token>"
-}
+Rol minimo requerido: `Ninguno`.
+> [!NOTE]  
+> Este endpoint no requiere autenticación.
+
+#### Ruta y Headers
+```HTPP
+GET /comments/page/{page-id}?limit={limit}&offset={offset}
 ```
-Este es el token que necesitas incluir en el header de tus peticiones.
+
+#### Parametros de la solicutd
+- `page-id`: Identificador único de la página cuyos comentarios deseas obtener.
+- `limit`: Número máximo de comentarios a devolver.
+- `offset`: Número de comentarios omitidos.
+
+#### Respuesta
+> Respuesta típica de comentarios con paginacion
+
+
+---
+### 6. Obtener detalles de las respuestas (Replies) de un comentario
+
+Rol minimo requerido: `Ninguno`.
+> [!NOTE]  
+> Este endpoint no requiere autenticación.
+
+#### Ruta y Headers
+```HTPP
+GET /comments/replies/{comment-id}?limit={limit}&offset={offset}
+```
+
+#### Parametros de la solicutd
+- `comment-id`: Identificador único del comentario para el cual deseas obtener las respuestas.
+- `limit`: Número máximo de comentarios a devolver.
+- `offset`: Número de comentarios omitidos.
+
+#### Respuesta
+> Respuesta típica de comentarios con paginacion
+

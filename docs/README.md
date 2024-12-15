@@ -1,27 +1,33 @@
 # CommentPost API
 
-API backend desarrollada en ASP.Net C# utilizando EntityFramework, esta api brinda funcionalidad para operar la seccion de comentarios de una pagina o blog.
+API backend que proporciona funcionalidades para gestionar los comentarios de una página o blog.
+
 
 ## Arquitectura
-Se aplica un mix de la Arquitectura hexagonal (puerto/adaptador) y Clean architecture.
-Desarrollada en C# con ASP.NET
 
-## Patrones y  implementados
-- Paginacion
+Se aplica un mix de la Arquitectura hexagonal (puerto/adaptador) y Clean architecture para una separación clara de responsabilidades.  
+Desarrollada en C# con ASP.NET
+La aplicación está desarrollada en ASP.NET C# utilizando EntityFramework,
+
+
+## Patrones y funcionalidades implementados
+
+Generales:
+- Paginación
 - Mappers
 - Uso de excepciones
-- Authenticacion por JWT y hashing de contraseñas
+- Autenticacion por JWT y hashing de contraseñas
 - Test Unitarios
 
 API:
-- Metodos de extension
+- Metodos de extensión
 - Middleware
 - Attributes
 - Rutas protegidas por roles
 
 Capa aplicacion y dominio:
-- Patron repositorio
-- Patron UnitOfWork
+- Patrón repositorio
+- Patrón UnitOfWork
 - Casos de uso con comando y handler
 - Servicios
 
@@ -32,4 +38,18 @@ Infraestructura:
 
 
 ## Autenticación
-El servidor devuelve un jwt con el id interno del usuario y su rol. En cada petición se debe enviar este token y el servidor lo va a verificar.  
+
+El servidor utiliza JWT (JSON Web Tokens) para autenticar las solicitudes. Cada vez que se realiza una petición a la API, se debe incluir un token Bearer en el header de la solicitud. Este token contiene el ID interno del usuario y su rol, y el servidor lo valida en cada petición.  
+Puedes consultar el proceso para [autenticarse y consumir la API](./endpoints.md#Autenticación) en la guía de endpoints.
+
+
+## Endpoints
+
+La guía de endpoints proporciona toda la información sobre cómo autenticarte y consumir la API.
+[Ver endpoints](./endpoints.md)
+
+
+## Diagrama
+
+Puedes ver un diagrama de todo el proceso de diseño del proyecto.
+[Ver diagrama](./CommentPostDiagram.png)

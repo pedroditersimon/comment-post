@@ -6,7 +6,6 @@ Todo:
 - Hacer tests de servicios
 - Hacer tests de mappers
 - Hacer tests de paginacion
-- Documentar api en readme
 Admin:
 	- Agregar rol de admin
 	- Agregar funcionalidades para manejar las cuentas de los usuarios
@@ -59,7 +58,7 @@ x Implementar EF en la infraestructura
 - (api) Usar DTOs en la api, enves de los comandos de los casos de uso
 - Usar el userId del token de la request para los comandos de los casos de uso
 - Agregar query filter de IsDeleted
-
+- Documentar api en readme
 
 ------------------------------
 Make a ef migration: (in the solution root folder)
