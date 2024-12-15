@@ -6,32 +6,31 @@ API backend que proporciona funcionalidades para gestionar los comentarios de un
 ## Arquitectura
 
 Se aplica un mix de la Arquitectura hexagonal (puerto/adaptador) y Clean architecture para una separación clara de responsabilidades.  
-Desarrollada en C# con ASP.NET
-La aplicación está desarrollada en ASP.NET C# utilizando EntityFramework,
+La aplicación está desarrollada en ASP.NET C# utilizando EntityFramework.
 
 
-## Patrones y funcionalidades implementados
+## Patrones y funcionalidades
 
-Generales:
+#### Generales:
 - Paginación
 - Mappers
 - Uso de excepciones
 - Autenticacion por JWT y hashing de contraseñas
 - Test Unitarios
 
-API:
+#### API:
 - Metodos de extensión
 - Middleware
 - Attributes
 - Rutas protegidas por roles
 
-Capa aplicacion y dominio:
+#### Capa aplicacion y dominio:
 - Patrón repositorio
 - Patrón UnitOfWork
 - Casos de uso con comando y handler
 - Servicios
 
-Infraestructura:
+#### Infraestructura:
 - EntityFramework
 - Migraciones de EntityFramework
 - PostgreSQL
@@ -45,11 +44,11 @@ Puedes consultar el proceso para [autenticarse y consumir la API](./endpoints.md
 
 ## Endpoints
 
-La guía de endpoints proporciona toda la información sobre cómo autenticarte y consumir la API.
+La guía de endpoints proporciona toda la información sobre cómo autenticarte y consumir la API.  
 [Ver endpoints](./endpoints.md)
 
 
 ## Diagrama
 
-Puedes ver un diagrama de todo el proceso de diseño del proyecto.
+Puedes ver un diagrama de todo el proceso de diseño del proyecto.  
 [Ver diagrama](./CommentPostDiagram.png)
