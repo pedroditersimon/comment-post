@@ -4,7 +4,7 @@ Esta guía detalla los endpoints disponibles, su propósito y ejemplos de uso. E
 
 
 ## Autenticación
-El servidor devuelve un JWT (JSON Web Token) con el ID interno del usuario y su rol. En cada petición, debes enviar este token en el Header 'Authorization', y el servidor lo verificará.
+El servidor devuelve un `JWT` (JSON Web Token) con el ID interno del usuario y su rol. En cada petición, debes enviar este token en el Header `Authorization`, y el servidor lo verificará.
 
 Incluir el token en el header de la siguiente manera:
 ```HTTP
