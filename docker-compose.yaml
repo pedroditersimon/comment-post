@@ -1,0 +1,34 @@
+version: "3.9"
+name: "comment-post-api"
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - PostgreSQLSettings__Host=db
+      - PostgreSQLSettings__User=postgres
+      - PostgreSQLSettings__Pass=admin
+      - PostgreSQLSettings__DbName=CommentPostAPI
+      - Kestrel__EndPoints__Http__Url=http://*:8080
+    #  - Kestrel__EndPoints__Https__Url=https://*:8081
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    links:
+      - db
+
+  db:
+    image: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=admin

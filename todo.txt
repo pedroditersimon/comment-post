@@ -11,8 +11,8 @@ Admin:
 	- Agregar funcionalidades para manejar las cuentas de los usuarios
 	- (api) Hacer controlador de User
 - El patch replaceWith no borra valores con null, sino que las ignora, buscar manera de realmente poner null
-
-
+- Pasar appsettings a developement.json
+- Hacer un comando bash para inicializar docker compose con un volumen y todo nombrado, asi tener el comando a mano
 
 Done:
 - Implementar Pagination y PaginationResult<T> en repositorios
