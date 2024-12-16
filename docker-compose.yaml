@@ -1,3 +1,7 @@
+# Commands
+# > docker compose up -d --build
+# > docker compose down -v --rmi local --remove-orphans
+
 version: "3.9"
 name: "comment-post-api"
 services:
@@ -32,3 +36,10 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=admin
+    volumes:
+      - db_volumen:/mnt/data
+
+volumes:
+  db_volumen:
+    # Declaración del volumen
+

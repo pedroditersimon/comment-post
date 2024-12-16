@@ -12,7 +12,6 @@ Admin:
 	- (api) Hacer controlador de User
 - El patch replaceWith no borra valores con null, sino que las ignora, buscar manera de realmente poner null
 - Pasar appsettings a developement.json
-- Hacer un comando bash para inicializar docker compose con un volumen y todo nombrado, asi tener el comando a mano
 
 Done:
 - Implementar Pagination y PaginationResult<T> en repositorios
@@ -59,7 +58,9 @@ x Implementar EF en la infraestructura
 - Usar el userId del token de la request para los comandos de los casos de uso
 - Agregar query filter de IsDeleted
 - Documentar api en readme
+- Hacer un comando bash para inicializar docker compose con un volumen y todo nombrado, asi tener el comando a mano
 
 ------------------------------
 Make a ef migration: (in the solution root folder)
 dotnet ef migrations add Initial --project CommentPost.Infrastructure --startup-project CommentPost.API -o EntityFramework/Migrations
+
