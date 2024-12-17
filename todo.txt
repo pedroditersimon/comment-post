@@ -11,7 +11,6 @@ Admin:
 	- Agregar funcionalidades para manejar las cuentas de los usuarios
 	- (api) Hacer controlador de User
 - El patch replaceWith no borra valores con null, sino que las ignora, buscar manera de realmente poner null
-- Pasar appsettings a developement.json
 
 Done:
 - Implementar Pagination y PaginationResult<T> en repositorios
@@ -59,6 +58,8 @@ x Implementar EF en la infraestructura
 - Agregar query filter de IsDeleted
 - Documentar api en readme
 - Hacer un comando bash para inicializar docker compose con un volumen y todo nombrado, asi tener el comando a mano
+- Pasar appsettings a developement.json
+
 
 ------------------------------
 Make a ef migration: (in the solution root folder)
